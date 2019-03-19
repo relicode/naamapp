@@ -1,19 +1,24 @@
 import React, { Component, Fragment } from 'react'
-import { Button, ScrollView, Text } from 'react-native'
+import { Button, ScrollView, Text, ViewStyle } from 'react-native'
 import { Alert } from 'react-native'
+import { NavigationScreenProp } from 'react-navigation'
 
-import AppState from '../components/utils/AppState'
 import { Page } from '../store/pages/types'
 import { get } from '../utils/requests'
+import AppStateIndicator from './utils/AppStateIndicator'
 
 const { alert } = Alert
+
+interface TestiProps {
+  navigation: NavigationScreenProp<any, any>
+}
 
 interface TestiState {
   pages: Page[],
 }
 
-export default class Testi extends Component<{}, TestiState> {
-  public constructor(props: any) {
+export default class Testi extends Component<TestiProps, TestiState> {
+  public constructor(props: TestiProps) {
     super(props)
     this.state = {
       pages: [],
@@ -38,13 +43,13 @@ export default class Testi extends Component<{}, TestiState> {
   public render() {
     return (
       <ScrollView>
-        <AppState />
+        <AppStateIndicator />
         <Text>{process.env.NODE_ENV}</Text>
         {this.state.pages.map((page) => (
           <Fragment key={page.order}>
             <Button
               title={`${page.createdAt.substr(0, 10)} - ${page.title}`}
-              onPress={() => this.handlePagePress(page)}
+              onPress={() => this.props.navigation.navigate('MainInfoPage', page)}
             />
             <Text></Text>
           </Fragment>

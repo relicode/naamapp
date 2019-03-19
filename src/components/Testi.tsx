@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Button, ScrollView, Text, ViewStyle } from 'react-native'
+import { Button, ScrollView, Text } from 'react-native'
 import { Alert } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
 

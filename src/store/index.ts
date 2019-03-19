@@ -1,7 +1,7 @@
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 import { all, put, takeLatest } from 'redux-saga/effects'
-import { composeWithDevTools } from 'remote-redux-devtools'
 
 import todos from './todos/reducers'
 import { ADD_TODO, AddTodosAction, WATCH_ADD_TODO } from './todos/types'
@@ -9,10 +9,10 @@ import { ADD_TODO, AddTodosAction, WATCH_ADD_TODO } from './todos/types'
 const rootReducer = combineReducers({ todos })
 const sagaMiddleware = createSagaMiddleware()
 
-const store = createStore(rootReducer, /* preloadedState, */ composeWithDevTools(
+const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(sagaMiddleware),
   // other store enhancers if any
-))
+));
 
 function* addTodo(a: AddTodosAction) {
   yield put({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { AppState, Text } from 'react-native'
+import { AppState, AppStateStatus, Text } from 'react-native'
 
-export default class AppStateExample extends Component {
+export default class AppStateIndicator extends Component {
   public state = {
     appState: AppState.currentState,
   }
@@ -15,7 +15,7 @@ export default class AppStateExample extends Component {
   }
 
 // tslint:disable-next-line: variable-name
-  public _handleAppStateChange = (nextAppState) => {
+  public _handleAppStateChange = (nextAppState: AppStateStatus) => {
     if (
       this.state.appState.match(/inactive|background/) &&
       nextAppState === 'active'

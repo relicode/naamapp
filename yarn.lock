@@ -5155,6 +5155,11 @@ react-native-config@^0.11.7:
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.7.tgz#a2b323f2ecd76a4df88cbb6bc86eaa2ef9febee7"
   integrity sha512-dn5s+zhwLyE25vRT/vaEtLk/j8ZL1UZKvejORNDWakSwpOnLmFurFeaZV83IqkPlfWHXHFdsYe2IRYG1WN4WkQ==
 
+react-native-device-info@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-1.0.0.tgz#f1b2da9ed77439abf07d9eee5f476645639c3d23"
+  integrity sha512-9ch8BAnQxodfIGfzs8rDLYMYeO8PuN01Mro1MTIbUt8kcPez6HdqeE10sTZIzHTDMLtqeAD8LBvxWzu0Kt7PqA==
+
 react-native-fit-image@^1.5.2:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/react-native-fit-image/-/react-native-fit-image-1.5.4.tgz#73d2fccc7ad902cf2ffcd008a2a74749ad50134a"

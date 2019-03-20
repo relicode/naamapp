@@ -1,8 +1,14 @@
+export interface HeaderImage {
+  url: string,
+  width: number,
+  height: number,
+}
+
 export interface Page {
-  [x: string]: string | number | undefined
+  // [x: string]: string | number | undefined
   content: string,
   createdAt: string,
-  headerImage: string,
+  headerImage: HeaderImage,
   title: string,
   updatedAt: string,
   order: number,

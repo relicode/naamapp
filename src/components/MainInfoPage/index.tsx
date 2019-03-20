@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
 import Markdown from 'react-native-markdown-renderer'
-import { NavigationScreenProp } from 'react-navigation'
 
-// import { Page } from '../../store/pages/types'
+interface MainInfoPageProps { navigation: any }
 
 const { height, width } = Dimensions.get('window')
 
-export default class MainInfoPage extends Component {
+export default class MainInfoPage extends Component<MainInfoPageProps> {
 
   public static navigationOptions = ({ navigation }) => {
     return {
@@ -15,25 +14,22 @@ export default class MainInfoPage extends Component {
     }
   }
 
-  public constructor(props) {
-    super(props)
-  }
-
   public render() {
     const { title, content, headerImage } = this.props.navigation.state.params
     return (
-      <View>
+      <ScrollView>
         <Image
-          source={{ uri: `https://${headerImage}` }}
+          source={{ uri: `https:${headerImage.url}` }}
           style={{
             width: Dimensions.get('window').width,
-            height: Dimensions.get('window').width / 1024 * 768,
+            height: Dimensions.get('window').width / headerImage.width * headerImage.height,
           }}
         />
-        <ScrollView style={{ padding: 15 }}>
+        <View style={{ padding: 15 }}>
+          <Text></Text>
           <Markdown>{content}</Markdown>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     )
   }
 }

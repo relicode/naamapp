@@ -2,7 +2,7 @@
   "name": "naamapp",
   "description": "Official Naamat festival app",
   "author": "Anssi Herranen <anssi.herranen@iki.fi> (https://www.linkedin.com/in/anssiherranen/)",
-  "license" : "BSD-3-Clause",
+  "license": "BSD-3-Clause",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -17,6 +17,7 @@
     "react": "16.8.3",
     "react-native": "0.59.1",
     "react-native-config": "^0.11.7",
+    "react-native-device-info": "^1.0.0",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-markdown-renderer": "^3.2.8",
     "react-native-restart": "^0.0.9",

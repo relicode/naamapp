@@ -8,7 +8,6 @@ import { action } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
 import { ApplicationState } from '../../store/types'
 import { Page } from '../MainInfoPage/types'
-import AppStateIndicator from '../utils/AppStateIndicator'
 
 const { alert } = Alert
 
@@ -30,8 +29,6 @@ class HomePage extends Component<HomePageProps> {
   public render() {
     return (
       <ScrollView>
-        <AppStateIndicator />
-        <Text>{process.env.NODE_ENV}</Text>
         {this.props.mainInfoPages.map((page: Page) => (
           <Fragment key={page.order}>
             <Button
@@ -41,6 +38,12 @@ class HomePage extends Component<HomePageProps> {
             <Text></Text>
           </Fragment>
         ))}
+        <Button
+          color="red"
+          title="Profile page"
+          onPress={() => this.props.navigation.navigate('ProfilePage')}
+        />
+        <Text></Text>
       </ScrollView>
     )
   }

@@ -29,7 +29,7 @@ export default class Testi extends Component<TestiProps, TestiState> {
     setInterval(async () => {
       const pages = await get('/main-pages') as Page[]
       this.setState({ pages })
-    }, 1000)
+    }, 1000 * 60)
   }
 
   public async componentDidMount() {

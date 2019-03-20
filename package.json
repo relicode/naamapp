@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build:release": "(cd android; ./gradlew assembleRelease)",
     "lint": "tslint src/**/*.ts{,x}",
     "lint:fix": "tslint --fix src/**/*.ts{,x}",
     "run:android": "REACT_DEBUGGER=react-native-debugger react-native run-android",

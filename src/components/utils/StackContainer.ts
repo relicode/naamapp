@@ -1,14 +1,14 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 
+import HomePage from '../HomePage'
 import MainInfoPage from '../MainInfoPage'
-import Testi from '../Testi'
 
 export default createAppContainer(createStackNavigator(
   {
-    Testi,
+    HomePage,
     MainInfoPage,
   },
   {
-    initialRouteName: 'Testi',
+    initialRouteName: 'HomePage',
   },
 ))

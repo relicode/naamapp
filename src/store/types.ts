@@ -1,5 +1,5 @@
-import { TodosState } from './todos/types'
+import { DynamicContent } from './dynamic-content/types'
 
-export default interface ApplicationState {
-  todos: TodosState,
+export interface ApplicationState {
+  dynamicContent: DynamicContent,
 }

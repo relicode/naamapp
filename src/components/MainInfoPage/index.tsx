@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
 import Markdown from 'react-native-markdown-renderer'
+import { NavigationScreenProp } from 'react-navigation'
 
-interface MainInfoPageProps { navigation: any }
+import { Page } from './types'
 
-const { height, width } = Dimensions.get('window')
+// TODO needs strong typing
 
-export default class MainInfoPage extends Component<MainInfoPageProps> {
+export interface MainInfoPageProps {
+  navigation: NavigationScreenProp<Page, any>
+}
+
+export default class MainInfoPage extends Component<MainInfoPageProps, {}> {
 
   public static navigationOptions = ({ navigation }) => {
     return {

@@ -1,33 +1,22 @@
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
-import { all, put, takeLatest } from 'redux-saga/effects'
+import { all } from 'redux-saga/effects'
 
-import todos from './todos/reducers'
-import { ADD_TODO, AddTodosAction, WATCH_ADD_TODO } from './todos/types'
+import dynamicContent from './dynamic-content/reducers'
+import { watchSync } from './dynamic-content/sagas'
 
-const rootReducer = combineReducers({ todos })
+const rootReducer = combineReducers({ dynamicContent })
 const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(sagaMiddleware),
   // other store enhancers if any
-));
-
-function* addTodo(a: AddTodosAction) {
-  yield put({
-    type: ADD_TODO,
-    text: a.text,
-  } as AddTodosAction)
-}
-
-function* watchAddTodo() {
-  yield takeLatest(WATCH_ADD_TODO, addTodo)
-}
+))
 
 function* rootSaga() {
   yield all([
-    watchAddTodo(),
+    watchSync(),
   ])
 }
 

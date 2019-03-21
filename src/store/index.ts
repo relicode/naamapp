@@ -3,11 +3,17 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 
+import appState from './app-state/reducers'
+import { watchAppStateChange } from './app-state/sagas'
+import { AppState } from './app-state/types'
 import dynamicContent from './dynamic-content/reducers'
 import { watchSync } from './dynamic-content/sagas'
 import { DynamicContent } from './dynamic-content/types'
 
-const rootReducer = combineReducers({ dynamicContent })
+const rootReducer = combineReducers({
+  appState,
+  dynamicContent,
+})
 const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(rootReducer, composeWithDevTools(
@@ -17,13 +23,15 @@ const store = createStore(rootReducer, composeWithDevTools(
 
 function* rootSaga() {
   yield all([
+    watchAppStateChange(),
     watchSync(),
   ])
 }
 
 sagaMiddleware.run(rootSaga)
 
-export interface ApplicationState {
+export interface ReduxStoreState {
+  appState: AppState,
   dynamicContent: DynamicContent,
 }
 

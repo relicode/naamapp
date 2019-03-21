@@ -5,7 +5,7 @@ import { NavigationScreenProps } from 'react-navigation'
 import { MapStateToProps, connect } from 'react-redux'
 
 import { action } from '../../store'
-import { ApplicationState } from '../../store'
+import { ReduxStoreState } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
 import { Page } from '../MainInfoPage/types'
 
@@ -49,7 +49,7 @@ class HomePage extends Component<HomePageProps> {
   }
 }
 
-const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ApplicationState> = (state) => ({
+const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxStoreState> = (state) => ({
   mainInfoPages: state.dynamicContent.mainInfoPages,
 })
 

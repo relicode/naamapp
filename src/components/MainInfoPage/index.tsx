@@ -5,22 +5,19 @@ import { NavigationScreenProp } from 'react-navigation'
 
 import { Page } from './types'
 
-// TODO needs strong typing
-
-export interface MainInfoPageProps {
-  navigation: NavigationScreenProp<Page, any>
+interface Props {
+  navigation: NavigationScreenProp<{ params: Page }>
 }
 
-export default class MainInfoPage extends Component<MainInfoPageProps, {}> {
-
-  public static navigationOptions = ({ navigation }) => {
+export default class MainInfoPage extends Component<Props> {
+  public static navigationOptions = ({ navigation }: Props) => {
     return {
       title: navigation.state.params.title,
     }
   }
 
   public render() {
-    const { title, content, headerImage } = this.props.navigation.state.params
+    const { /*title,*/ content, headerImage } = this.props.navigation.state.params
     return (
       <ScrollView>
         <Image

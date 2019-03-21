@@ -5,6 +5,7 @@ import { all } from 'redux-saga/effects'
 
 import dynamicContent from './dynamic-content/reducers'
 import { watchSync } from './dynamic-content/sagas'
+import { DynamicContent } from './dynamic-content/types'
 
 const rootReducer = combineReducers({ dynamicContent })
 const sagaMiddleware = createSagaMiddleware()
@@ -22,5 +23,10 @@ function* rootSaga() {
 
 sagaMiddleware.run(rootSaga)
 
-export default store
+export interface ApplicationState {
+  dynamicContent: DynamicContent,
+}
+
 export const action = (a: AnyAction) => store.dispatch({ ...a })
+
+export default store

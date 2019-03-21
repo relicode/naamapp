@@ -1,6 +1,7 @@
 ---
-  extends: "tslint:recommended"
-  rulesDirectory: node_modules/tslint-eslint-rules/dist/rules
+  extends:
+    - tslint-eslint-rules
+    - tslint:recommended
   rules:
     arrow-parens: true
     interface-name: [true, never-prefix]

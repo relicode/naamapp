@@ -5,8 +5,8 @@ import { NavigationScreenProps } from 'react-navigation'
 import { MapStateToProps, connect } from 'react-redux'
 
 import { action } from '../../store'
+import { ApplicationState } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
-import { ApplicationState } from '../../store/types'
 import { Page } from '../MainInfoPage/types'
 
 const { alert } = Alert
@@ -15,7 +15,7 @@ interface StateProps {
   mainInfoPages: Page[],
 }
 
-interface HomePageProps extends NavigationScreenProps, StateProps {}
+type HomePageProps = NavigationScreenProps & StateProps
 
 class HomePage extends Component<HomePageProps> {
   public handlePagePress(page: Page) {
@@ -49,7 +49,7 @@ class HomePage extends Component<HomePageProps> {
   }
 }
 
-const mapStateToProps: MapStateToProps<StateProps, {}, ApplicationState> = (state) => ({
+const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ApplicationState> = (state) => ({
   mainInfoPages: state.dynamicContent.mainInfoPages,
 })
 

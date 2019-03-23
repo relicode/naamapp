@@ -4,6 +4,7 @@ import { APP_STATE_CHANGE, SET_APP_STATE_STATUS, SetAppStateStatusAction } from 
 
 function* setAppStateStatus(action: SetAppStateStatusAction) {
   const { appStateStatus } = action
+
   yield put({
     type: SET_APP_STATE_STATUS,
     status: appStateStatus,

@@ -3,10 +3,10 @@ import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
 import Markdown from 'react-native-markdown-renderer'
 import { NavigationScreenProp } from 'react-navigation'
 
-import { Page } from './types'
+import { MainInfoPage as MainInfoPageProps } from '../../store/dynamic-content/types'
 
 interface Props {
-  navigation: NavigationScreenProp<{ params: Page }>
+  navigation: NavigationScreenProp<{ params: MainInfoPageProps }>
 }
 
 export default class MainInfoPage extends Component<Props> {

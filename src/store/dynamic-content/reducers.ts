@@ -9,10 +9,10 @@ export const initialState: DynamicContent = {
 
 const reducer: Reducer<DynamicContent, AnyAction> =
   (state = initialState, action): DynamicContent => {
-    const { type, mainInfoPages } = action
+    const { type, mainInfoPages, synced } = action
     switch (type) {
       case SET_MAIN_INFO_PAGES:
-        return { ...state, mainInfoPages }
+        return { ...state, mainInfoPages, synced }
       default:
         return state
     }

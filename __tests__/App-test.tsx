@@ -16,6 +16,13 @@ jest.mock('react-native-device-info', () => {
   }
 })
 
+jest.mock('@react-native-community/async-storage', () => {
+  return {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+  }
+})
+
 jest.mock('react-navigation', () => {
   return {
     createAppContainer: jest.fn().mockReturnValue(function NavigationContainer() {return null}),

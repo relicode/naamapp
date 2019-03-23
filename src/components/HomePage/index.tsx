@@ -1,35 +1,38 @@
 import React, { Component, Fragment } from 'react'
 import { Button, ScrollView, Text } from 'react-native'
 import { Alert } from 'react-native'
-import { NavigationScreenProps } from 'react-navigation'
+import { NavigationEvents, NavigationScreenProps } from 'react-navigation'
 import { MapStateToProps, connect } from 'react-redux'
 
 import { action } from '../../store'
 import { ReduxStoreState } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
-import { Page } from '../MainInfoPage/types'
+import { MainInfoPage } from '../../store/dynamic-content/types'
 
 const { alert } = Alert
 
 interface StateProps {
-  mainInfoPages: Page[],
+  mainInfoPages: MainInfoPage[],
 }
 
 type HomePageProps = NavigationScreenProps & StateProps
 
-class HomePage extends Component<HomePageProps> {
-  public handlePagePress(page: Page) {
-    alert(page.title, page.content)
-  }
+const syncDynamicContent = () => (
+  action({ type: SYNC })
+)
 
-  public componentDidMount() {
-    action({ type: SYNC })
+class HomePage extends Component<HomePageProps> {
+  public handlePagePress(page: MainInfoPage) {
+    alert(page.title, page.content)
   }
 
   public render() {
     return (
       <ScrollView>
-        {this.props.mainInfoPages.map((page: Page) => (
+        <NavigationEvents
+          onWillFocus={syncDynamicContent}
+        />
+        {this.props.mainInfoPages.map((page: MainInfoPage) => (
           <Fragment key={page.order}>
             <Button
               title={`${page.createdAt.substr(0, 10)} - ${page.title}`}

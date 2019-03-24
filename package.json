@@ -7,14 +7,17 @@
   "private": true,
   "scripts": {
     "build:release": "(cd android; ./gradlew assembleRelease)",
+    "cache:clear": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn && yarn start -- --reset-cache",
     "lint": "tslint src/**/*.ts{,x}",
     "lint:fix": "tslint --fix src/**/*.ts{,x}",
     "run:android": "REACT_DEBUGGER=react-native-debugger react-native run-android",
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start:clearcache": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "test": "jest"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.2.1",
+    "@react-native-community/netinfo": "^1.4.0",
     "react": "16.8.3",
     "react-native": "0.59.1",
     "react-native-config": "^0.11.7",

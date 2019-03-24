@@ -1,31 +1,33 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
+import { NavigationScreenProps } from 'react-navigation'
+import { MapStateToProps, connect } from 'react-redux'
 
-import { loadDynamicContent } from '../../store'
+import { ReduxStoreState } from '../../store'
 
-const applicationName = DeviceInfo.getApplicationName()
+interface StateProps {
+  lastSynced: Date,
+}
 
-export default class ProfilePage extends Component<any, any> {
-  public constructor(props: any) {
-    super(props)
-    this.state = {
-      dynamicContent: {},
-    }
-  }
-  public async componentDidMount() {
-    const dynamicContent = await loadDynamicContent()
-    this.setState({ dynamicContent })
-  }
+type ProfilePageProps = NavigationScreenProps & StateProps
+
+class ProfilePage extends Component<ProfilePageProps, {}> {
   public render() {
     return (
       <View>
         <Text>{process.env.NODE_ENV}</Text>
-        <Text>Application name: {applicationName}</Text>
+        <Text>Application name: {DeviceInfo.getApplicationName()}</Text>
         <Text>Device ID: {DeviceInfo.getDeviceId()}</Text>
         <Text>Device unique ID: {DeviceInfo.getUniqueID()}</Text>
-        <Text>Last synced: {this.state.dynamicContent.synced}</Text>
+        <Text>Last synced: {this.props.lastSynced.toTimeString()}</Text>
       </View>
     )
   }
 }
+
+const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxStoreState> = (state) => ({
+  lastSynced: new Date(state.dynamicContent.lastSynced),
+})
+
+export default connect(mapStateToProps)(ProfilePage)

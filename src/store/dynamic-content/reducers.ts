@@ -1,18 +1,20 @@
 import { AnyAction, Reducer } from 'redux'
 
-import { DynamicContent, SET_MAIN_INFO_PAGES } from './types'
+import { DynamicContent, DynamicContentAction, SET_DYNAMIC_CONTENT, SET_LAST_SYNCED } from './types'
 
 export const initialState: DynamicContent = {
   mainInfoPages: [],
-  synced: '',
+  lastSynced: '',
 }
 
 const reducer: Reducer<DynamicContent, AnyAction> =
-  (state = initialState, action): DynamicContent => {
-    const { type, mainInfoPages, synced } = action
+  (state = initialState, action: DynamicContentAction): DynamicContent => {
+    const { type, mainInfoPages, lastSynced } = action
     switch (type) {
-      case SET_MAIN_INFO_PAGES:
-        return { ...state, mainInfoPages, synced }
+      case SET_DYNAMIC_CONTENT:
+        return { ...state, mainInfoPages, lastSynced }
+      case SET_LAST_SYNCED:
+        return { ...state, lastSynced }
       default:
         return state
     }

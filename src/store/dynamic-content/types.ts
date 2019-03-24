@@ -1,7 +1,5 @@
 import { AnyAction } from 'redux'
 
-export type SetMainInfoPagesAction = AnyAction & DynamicContent
-
 export interface HeaderImage {
   url: string,
   width: number,
@@ -19,9 +17,27 @@ export interface MainInfoPage {
 
 export interface DynamicContent {
   mainInfoPages: MainInfoPage[],
-  synced: string,     // 2019-03-16T20:14:23.230Z
+  synced: string,
 }
+
+export interface TrimmedDynamicContent {
+  mainInfoPages: MainInfoPage[],
+  lastSynced: string,
+}
+
+export type TrimmedDynamicContentAction = TrimmedDynamicContent & AnyAction
+
+export interface SetMainInfoPagesAction extends AnyAction {
+  mainInfoPages: MainInfoPage[],
+}
+
+export interface SetSyncAction extends AnyAction {
+  lastSynced: string,
+}
+
+export type DynamicContentAction = SetMainInfoPagesAction | SetSyncAction | TrimmedDynamicContentAction
 
 const storePrefix: string = 'dynamicContent'
 export const SYNC: string = `${storePrefix}/SYNC`
-export const SET_MAIN_INFO_PAGES: string = `${storePrefix}/SET_MAIN_INFO_PAGES`
+export const SET_DYNAMIC_CONTENT: string = `${storePrefix}/SET_DYNAMIC_CONTENT`
+export const SET_LAST_SYNCED: string = `${storePrefix}/SET_LAST_SYNCED`

@@ -1,30 +1,45 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects'
+import { AnyAction } from 'redux'
+import { call, put, takeLatest } from 'redux-saga/effects'
 
-import { loadDynamicContent, saveDynamicContent } from '../../store'
-import { get } from '../../utils/requests'
-import { DynamicContent, SET_MAIN_INFO_PAGES, SYNC } from './types'
+import { fetchDynamicContent, fetchRemoteUpdateTime } from '../../services/dynamic-content'
+import { loadDynamicContent, saveDynamicContent } from '../../utils/async-storage'
+import {
+  DynamicContent,
+  SET_DYNAMIC_CONTENT,
+  SYNC,
+  TrimmedDynamicContent,
+  TrimmedDynamicContentAction,
+} from './types'
 
 function* syncDynamicContent() {
-  const [localContent, remoteCache] = yield all([
-    call(loadDynamicContent),
-    call(get, '/cache'),
-  ])
-  const storageSynced = localContent.synced
-  const lastRemoteUpdate = remoteCache.time
-  const remoteSyncNeeded = !storageSynced || (new Date(storageSynced) < new Date(lastRemoteUpdate))
 
-  const dynamicContent: DynamicContent = yield remoteSyncNeeded ? call(get, '/main-pages') : call(loadDynamicContent)
-  const { mainInfoPages, synced } = dynamicContent
-
-  if (remoteSyncNeeded) {
-    yield call(saveDynamicContent, dynamicContent)
+  const localContent = yield call(loadDynamicContent)
+  if (localContent.lastSynced) {
+    const setDynamicContentAction: TrimmedDynamicContentAction = {
+      type: SET_DYNAMIC_CONTENT,
+      mainInfoPages: localContent.mainInfoPages,
+      lastSynced: localContent.lastSynced,
+    }
+    yield put(setDynamicContentAction)
   }
 
-  yield put({
-    type: SET_MAIN_INFO_PAGES,
-    mainInfoPages,
-    synced,
-  })
+  const remoteContentUpdateTime = yield call(fetchRemoteUpdateTime)
+
+  const remoteSyncNeeded = !localContent.lastSynced
+    || (new Date(localContent.lastSynced) < new Date(remoteContentUpdateTime))
+
+  const dynamicContent: DynamicContent = yield remoteSyncNeeded ? call(fetchDynamicContent) : localContent
+  const trimmedDynamicContent: TrimmedDynamicContent = {
+    mainInfoPages: dynamicContent.mainInfoPages,
+    lastSynced: dynamicContent.synced,
+  }
+
+  const action: AnyAction = {
+    type: SET_DYNAMIC_CONTENT,
+    ...trimmedDynamicContent,
+  }
+  yield put(action)
+  yield saveDynamicContent(trimmedDynamicContent)
 }
 
 export function* watchSync() {

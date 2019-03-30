@@ -28,7 +28,10 @@ function* syncDynamicContent() {
   const remoteSyncNeeded = !localContent.lastSynced
     || (new Date(localContent.lastSynced) < new Date(remoteContentUpdateTime))
 
-  const dynamicContent: DynamicContent = yield remoteSyncNeeded ? call(fetchDynamicContent) : localContent
+  const dynamicContent: DynamicContent = yield remoteSyncNeeded
+    ? call(fetchDynamicContent, 'mainInfoPage')
+    : localContent
+
   const trimmedDynamicContent: TrimmedDynamicContent = {
     mainInfoPages: dynamicContent.mainInfoPages,
     lastSynced: dynamicContent.synced,

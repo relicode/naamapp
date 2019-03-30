@@ -6,6 +6,6 @@ export const fetchRemoteUpdateTime = async (): Promise<string> => {
   return response.time
 }
 
-export const fetchDynamicContent = (): Promise<DynamicContent> => (
-  get('/dynamic-content') as Promise<DynamicContent>
+export const fetchDynamicContent = (contentType: 'mainInfoPage'): Promise<DynamicContent> => (
+  get(`/dynamic-content/${contentType}`) as Promise<DynamicContent>
 )

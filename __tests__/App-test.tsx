@@ -30,12 +30,12 @@ jest.mock('react-navigation', () => {
     createMaterialTopTabNavigator: jest.fn(),
     createStackNavigator: jest.fn(),
     StackActions: {
-      push: jest.fn().mockImplementation(x => ({...x,  'type': 'Navigation/PUSH'})),
-      replace: jest.fn().mockImplementation(x => ({...x,  'type': 'Navigation/REPLACE'})),
+      push: jest.fn().mockImplementation((x) => ({ ...x,  type: 'Navigation/PUSH' })),
+      replace: jest.fn().mockImplementation((x) => ({ ...x,  type: 'Navigation/REPLACE' })),
     },
     NavigationActions: {
-      navigate: jest.fn().mockImplementation(x => x),
-    }
+      navigate: jest.fn().mockImplementation((x) => x),
+    },
   }
 })
 

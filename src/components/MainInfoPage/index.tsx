@@ -7,7 +7,7 @@ import { MainInfoPage as MainInfoPageProps } from '../../store/dynamic-content/t
 
 export default class MainInfoPage extends Component<MainInfoPageProps & NavigationScreenProps> {
   public render() {
-    const {title, content, headerImage } = this.props.navigation.state.params
+    const { title, content, headerImage } = this.props.navigation.state.params
     return (
       <ScrollView>
         <Image

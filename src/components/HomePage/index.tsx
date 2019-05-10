@@ -7,22 +7,18 @@ import { MapStateToProps, connect } from 'react-redux'
 import { action } from '../../store'
 import { ReduxStoreState } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
-import { MainInfoPage } from '../../store/dynamic-content/types'
+import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
 
 const { alert } = Alert
 
 interface StateProps {
-  mainInfoPages: MainInfoPage[],
+  mainInfoPages: MainInfoPageRecord[],
 }
 
 type HomePageProps = NavigationScreenProps & StateProps
 
-const syncDynamicContent = () => (
-  action({ type: SYNC })
-)
-
 class HomePage extends Component<HomePageProps> {
-  public handlePagePress(page: MainInfoPage) {
+  public handlePagePress(page: MainInfoPageRecord) {
     alert(page.title, page.content)
   }
 
@@ -30,9 +26,9 @@ class HomePage extends Component<HomePageProps> {
     return (
       <ScrollView>
         <NavigationEvents
-          onWillFocus={syncDynamicContent}
+          onWillFocus={() => action({ type: SYNC })}
         />
-        {this.props.mainInfoPages.map((page: MainInfoPage) => (
+        {this.props.mainInfoPages.map((page: MainInfoPageRecord) => (
           <Fragment key={page.order}>
             <Button
               title={`${page.createdAt.substr(0, 10)} - ${page.title}`}

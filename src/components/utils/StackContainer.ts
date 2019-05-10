@@ -4,8 +4,7 @@ import HomePage from '../HomePage'
 import MainInfoPage from '../MainInfoPage'
 import ProfilePage from '../ProfilePage'
 
-interface NavigationOptions {
-  (data: {
+type NavigationOptions = (data: {
     navigation: {
       state: {
         params: {
@@ -15,12 +14,11 @@ interface NavigationOptions {
             url: string,
             width: number,
             height: number,
-          }
-        }
-      }
-    }
-  }): NavigationScreenOptions
-}
+          },
+        },
+      },
+    },
+  }) => NavigationScreenOptions
 
 const navigationOptions: NavigationOptions = ({ navigation }) => ({
   title: `${navigation.state.params.name}'s Profile'`,

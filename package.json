@@ -14,7 +14,8 @@
     "run:android": "REACT_DEBUGGER=react-native-debugger react-native run-android",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:clearcache": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
-    "test": "jest"
+    "test": "jest",
+    "shake": "adb shell input keyevent 82"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.2.1",

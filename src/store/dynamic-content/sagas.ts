@@ -1,8 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 
+import { loadDynamicContent as getLocalContent, saveDynamicContent } from '../../services/async-storage'
 import { fetchDynamicContent, fetchLastSynced } from '../../services/dynamic-content'
-import { loadDynamicContent, saveDynamicContent } from '../../utils/async-storage'
-import { DynamicContentResponse } from '../../utils/types/dynamic-content'
+import { DynamicContent, DynamicContentResponse } from '../../utils/types/dynamic-content'
 import {
   DynamicContentAction,
   SET_DYNAMIC_CONTENT,
@@ -10,12 +10,12 @@ import {
 } from './types'
 
 function* syncDynamicContent() {
-  const localContent = yield call(loadDynamicContent)
+  const localContent: DynamicContent = yield call(getLocalContent)
   if (localContent.synced) {
     yield put({
       type: SET_DYNAMIC_CONTENT,
       ...localContent,
-    })
+    } as DynamicContentAction)
   }
 
   const remoteContentUpdateTime = yield call(fetchLastSynced)
@@ -27,11 +27,10 @@ function* syncDynamicContent() {
     ? call(fetchDynamicContent)
     : localContent
 
-  const action: DynamicContentAction = {
+  yield put({
     type: SET_DYNAMIC_CONTENT,
     ...dynamicContent,
-  }
-  yield put(action)
+  } as DynamicContentAction)
   yield saveDynamicContent(dynamicContent)
 }
 

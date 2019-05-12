@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { initialState } from '../store/dynamic-content/reducers'
-import { DynamicContent, DynamicContentResponse } from './types/dynamic-content'
+import { DynamicContent, DynamicContentResponse } from '../utils/types/dynamic-content'
 
 const DYNAMIC_CONTENT = 'dynamicContent'
 

@@ -52,7 +52,7 @@ In .env file, set the following environment variables:
 ## Development
 
 ### 1. Run emulator
-`@emulator <emulator name>`
+`emulator @<emulator name>`
 
 ### 2. Run Metro Bundler
 `yarn start`

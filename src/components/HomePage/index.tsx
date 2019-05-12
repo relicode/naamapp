@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import { Button, ScrollView, Text } from 'react-native'
+import React, { Component } from 'react'
+import { Text, TouchableHighlight, View } from 'react-native'
 import { Alert } from 'react-native'
 import { NavigationEvents, NavigationScreenProps } from 'react-navigation'
 import { MapStateToProps, connect } from 'react-redux'
@@ -7,13 +7,16 @@ import { MapStateToProps, connect } from 'react-redux'
 import { action } from '../../store'
 import { ReduxStoreState } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
-import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
+import commonStyles from '../../styles/common'
+import { MainInfoPageRecord, PerformanceRecord, PerformerRecord } from '../../utils/types/dynamic-content'
+import { MAIN_PAGE_NAMES, MainPageNames } from '../utils/StackContainer'
+import landingPageStyles from './styles'
 
 const { alert } = Alert
+const { rowStyle, columnStyle, textHeader } = commonStyles
+const { landingPageButtonStyle } = landingPageStyles
 
-interface StateProps {
-  mainInfoPages: MainInfoPageRecord[],
-}
+interface StateProps {}
 
 type HomePageProps = NavigationScreenProps & StateProps
 
@@ -22,34 +25,39 @@ class HomePage extends Component<HomePageProps> {
     alert(page.title, page.content)
   }
 
+  public renderLandingPageButton(text: string, page: MainPageNames, pageParams?: any) {
+    return (
+      <TouchableHighlight
+        key={text}
+        underlayColor="white"
+        activeOpacity={0.95}
+        style={landingPageButtonStyle}
+        onPress={() => this.props.navigation.navigate(page, pageParams)}
+      >
+        <Text style={textHeader}>{text}</Text>
+      </TouchableHighlight>
+    )
+  }
+
   public render() {
     return (
-      <ScrollView>
+      <View style={rowStyle}>
         <NavigationEvents
           onWillFocus={() => action({ type: SYNC })}
         />
-        {this.props.mainInfoPages.map((page: MainInfoPageRecord) => (
-          <Fragment key={page.order}>
-            <Button
-              title={`${page.createdAt.substr(0, 10)} - ${page.title}`}
-              onPress={() => this.props.navigation.navigate('MainInfoPage', page)}
-            />
-            <Text></Text>
-          </Fragment>
-        ))}
-        <Button
-          color="red"
-          title="Profile page"
-          onPress={() => this.props.navigation.navigate('ProfilePage')}
-        />
-        <Text></Text>
-      </ScrollView>
+        <View style={columnStyle}>
+          {MAIN_PAGE_NAMES.slice(0, 3).map((p) => this.renderLandingPageButton(p, p))}
+        </View>
+        <View style={columnStyle}>
+          {MAIN_PAGE_NAMES.slice(3).map((p) => this.renderLandingPageButton(p, p))}
+        </View>
+      </View>
     )
   }
 }
 
 const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxStoreState> = (state) => ({
-  mainInfoPages: state.dynamicContent.mainInfoPages,
+  // mainInfoPages: state.dynamicContent.mainInfoPages,
 })
 
 export default connect(mapStateToProps)(HomePage)

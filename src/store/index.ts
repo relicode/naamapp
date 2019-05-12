@@ -4,12 +4,12 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 
+import { DynamicContent } from '../utils/types/dynamic-content'
 import appState from './app-state/reducers'
 import { watchAppStateChange } from './app-state/sagas'
 import { AppState } from './app-state/types'
 import dynamicContent, { initialState } from './dynamic-content/reducers'
 import { watchSync } from './dynamic-content/sagas'
-import { TrimmedDynamicContent } from './dynamic-content/types'
 
 const rootReducer = combineReducers({
   appState,
@@ -33,7 +33,7 @@ sagaMiddleware.run(rootSaga)
 
 export interface ReduxStoreState {
   appState: AppState,
-  dynamicContent: TrimmedDynamicContent,
+  dynamicContent: DynamicContent,
 }
 
 export const action = (a: AnyAction) => store.dispatch({ ...a })

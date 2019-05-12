@@ -1,45 +1,37 @@
-import { AnyAction } from 'redux'
 import { call, put, takeLatest } from 'redux-saga/effects'
 
-import { fetchDynamicContent, fetchRemoteUpdateTime } from '../../services/dynamic-content'
-import { loadDynamicContent, saveDynamicContent } from '../../utils/async-storage'
+import { loadDynamicContent as getLocalContent, saveDynamicContent } from '../../services/async-storage'
+import { fetchDynamicContent, fetchLastSynced } from '../../services/dynamic-content'
+import { DynamicContent, DynamicContentResponse } from '../../utils/types/dynamic-content'
 import {
-  DynamicContent,
+  DynamicContentAction,
   SET_DYNAMIC_CONTENT,
   SYNC,
-  TrimmedDynamicContent,
-  TrimmedDynamicContentAction,
 } from './types'
 
 function* syncDynamicContent() {
-
-  const localContent = yield call(loadDynamicContent)
-  if (localContent.lastSynced) {
-    const setDynamicContentAction: TrimmedDynamicContentAction = {
+  const localContent: DynamicContent = yield call(getLocalContent)
+  if (localContent.synced) {
+    yield put({
       type: SET_DYNAMIC_CONTENT,
-      mainInfoPages: localContent.mainInfoPages,
-      lastSynced: localContent.lastSynced,
-    }
-    yield put(setDynamicContentAction)
+      ...localContent,
+    } as DynamicContentAction)
   }
 
-  const remoteContentUpdateTime = yield call(fetchRemoteUpdateTime)
+  const remoteContentUpdateTime = yield call(fetchLastSynced)
 
-  const remoteSyncNeeded = !localContent.lastSynced
-    || (new Date(localContent.lastSynced) < new Date(remoteContentUpdateTime))
+  const remoteSyncNeeded = __DEV__ || !localContent.synced
+    || (new Date(localContent.synced) < new Date(remoteContentUpdateTime))
 
-  const dynamicContent: DynamicContent = yield remoteSyncNeeded ? call(fetchDynamicContent) : localContent
-  const trimmedDynamicContent: TrimmedDynamicContent = {
-    mainInfoPages: dynamicContent.mainInfoPages,
-    lastSynced: dynamicContent.synced,
-  }
+  const dynamicContent: DynamicContentResponse = yield remoteSyncNeeded
+    ? call(fetchDynamicContent)
+    : localContent
 
-  const action: AnyAction = {
+  yield put({
     type: SET_DYNAMIC_CONTENT,
-    ...trimmedDynamicContent,
-  }
-  yield put(action)
-  yield saveDynamicContent(trimmedDynamicContent)
+    ...dynamicContent,
+  } as DynamicContentAction)
+  yield saveDynamicContent(dynamicContent)
 }
 
 export function* watchSync() {

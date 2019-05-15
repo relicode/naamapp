@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
-import Markdown from 'react-native-markdown-renderer'
+import { Dimensions, ImageBackground, Text, TouchableHighlight, View } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
 import { NavigationScreenProps } from 'react-navigation'
-import { MapStateToProps, connect } from 'react-redux'
+import { connect, MapStateToProps } from 'react-redux'
 
 import { ReduxStoreState } from '../../store'
-import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
+import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
 
 interface StateProps {
   mainInfoPages: MainInfoPageRecord[],
@@ -13,10 +13,29 @@ interface StateProps {
 
 class MainInfoPageList extends Component<StateProps & NavigationScreenProps> {
   public render() {
+    const screenWidth = Math.round(Dimensions.get('window').width)
     return (
-      <ScrollView>
-        {this.props.mainInfoPages.map((p) => <Text key={p.title}>{JSON.stringify(p, null, 2)}</Text>)}
-      </ScrollView>
+      <FlatList
+        data={this.props.mainInfoPages.map((p) => ({ ...p, key: p.title }))}
+        renderItem={({ item }) => (
+          <TouchableHighlight
+            onPress={() => this.props.navigation.navigate('MainInfoPage', { page: item, title: item.title })}
+          >
+            <ImageBackground
+              source={{ uri: `https://${item.headerImage.url}` }}
+              style={{
+                width: screenWidth,
+                height: item.headerImage.height * screenWidth / item.headerImage.width,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', fontSize: 36, padding: 5 }}>{item.title}</Text>
+            </ImageBackground>
+          </TouchableHighlight>
+        )}
+      />
     )
   }
 }

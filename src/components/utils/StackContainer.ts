@@ -11,7 +11,10 @@ export const MAIN_PAGE_NAMES = [
   'HomePage', 'MainInfoPageList', 'ProfilePage',
   'PerformerPageList', 'PerformancePageList', 'Kikkelis kokkelis page',
 ] as const
+export const PAGE_NAMES = [...MAIN_PAGE_NAMES, 'MainInfoPage'] as const
+
 export type MainPageNames = typeof MAIN_PAGE_NAMES[number]
+export type PageNames = typeof PAGE_NAMES[number]
 
 /*
 type GetNavigationOptionsParams = (data: {
@@ -33,13 +36,13 @@ type GetNavigationOptionsParams = (data: {
 const getNavigationOptions: GetNavigationOptionsParams = ({ navigation }) => ({
   title: `Ze Profile'`,
 })
-*/
 
 const getNavigationOptions = () => ({
-  title: `Ze Profile'`,
+  // title: `Ze Profile'`,
 })
+*/
 
-type StackNavigatorOptions = { [key in MainPageNames]: {} }
+type StackNavigatorOptions = { [key in PageNames]: {} }
 
 const stackNavigatorOptions: StackNavigatorOptions = {
   'HomePage': {
@@ -50,7 +53,10 @@ const stackNavigatorOptions: StackNavigatorOptions = {
   },
   'MainInfoPageList': {
     screen: MainInfoPageList,
-    navigationOptions: getNavigationOptions,
+    navigationOptions: () => ({ title: 'Yleisinfo' }),
+  },
+  'MainInfoPage': {
+    screen: MainInfoPage,
   },
   'ProfilePage': {
     screen: ProfilePage,

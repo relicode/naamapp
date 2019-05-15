@@ -20,14 +20,14 @@ export default class HomePage extends Component<HomePageProps> {
     alert(page.title, page.content)
   }
 
-  public renderLandingPageButton(text: string, page: MainPageNames, pageParams?: any) {
+  public renderLandingPageButton(text: string, page: MainPageNames) {
     return (
       <TouchableHighlight
         key={text}
         underlayColor="white"
         activeOpacity={0.95}
         style={landingPageButtonStyle}
-        onPress={() => this.props.navigation.navigate(page, pageParams)}
+        onPress={() => this.props.navigation.navigate(page)}
       >
         <Text style={textHeader}>{text}</Text>
       </TouchableHighlight>

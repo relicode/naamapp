@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
 import Markdown from 'react-native-markdown-renderer'
-import { NavigationScreenProps } from 'react-navigation'
+import { NavigationScreenOptions, NavigationScreenProps } from 'react-navigation'
 
-import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
+import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
 
 export default class MainInfoPage extends Component<MainInfoPageRecord & NavigationScreenProps> {
+  public static navigationOptions = ({ navigation }: NavigationScreenProps) => {
+    return {
+      title: navigation.getParam('title', '???'),
+    }
+  }
   public render() {
-    const { title, content, headerImage } = this.props
+    const { content, headerImage } = this.props.navigation.getParam('page')
     return (
       <ScrollView>
         <Image

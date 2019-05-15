@@ -1,4 +1,4 @@
-import { NavigationScreenOptions, createAppContainer, createStackNavigator } from 'react-navigation'
+import { createAppContainer, createStackNavigator, NavigationScreenOptions } from 'react-navigation'
 
 import HomePage from '../HomePage'
 import MainInfoPage from '../MainInfoPage'

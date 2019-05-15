@@ -1,7 +1,12 @@
 import { Reducer } from 'redux'
 
 import { DynamicContent } from '../../utils/types/dynamic-content'
-import { DynamicContentAction, SET_DYNAMIC_CONTENT, SET_SYNCED, SetDynamicContentAction } from './types'
+import {
+  DynamicContentAction,
+  SET_DYNAMIC_CONTENT,
+  SET_SYNCED,
+  SetDynamicContentAction,
+} from './types'
 
 export const initialState: DynamicContent = {
   mainInfoPages: [],

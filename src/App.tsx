@@ -1,7 +1,8 @@
-import NetInfo from '@react-native-community/netinfo'
 import React, { Component } from 'react'
 import { AppState, AppStateStatus } from 'react-native'
 import { Provider } from 'react-redux'
+
+import NetInfo from '@react-native-community/netinfo'
 
 import MainErrorBoundary from './components/utils/MainErrorBoundary'
 import StackContainer from './components/utils/StackContainer'

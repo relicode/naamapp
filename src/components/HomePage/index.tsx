@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from 'react'
-import { Button, ScrollView, Text } from 'react-native'
-import { Alert } from 'react-native'
+import { Alert, Button, ScrollView, Text } from 'react-native'
 import { NavigationEvents, NavigationScreenProps } from 'react-navigation'
-import { MapStateToProps, connect } from 'react-redux'
+import { connect, MapStateToProps } from 'react-redux'
 
-import { action } from '../../store'
-import { ReduxStoreState } from '../../store'
+import { action, ReduxStoreState } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
 import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
 

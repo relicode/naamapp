@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import { NavigationScreenProps } from 'react-navigation'
-import { MapStateToProps, connect } from 'react-redux'
+import { connect, MapStateToProps } from 'react-redux'
 
 import { ReduxStoreState } from '../../store'
 

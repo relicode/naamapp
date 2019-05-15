@@ -2,9 +2,19 @@ import { createAppContainer, createStackNavigator, NavigationScreenOptions } fro
 
 import HomePage from '../HomePage'
 import MainInfoPage from '../MainInfoPage'
+import MainInfoPageList from '../MainInfoPageList'
+import PerformancePageList from '../PerformancePageList'
+import PerformerPageList from '../PerformerPageList'
 import ProfilePage from '../ProfilePage'
 
-type NavigationOptions = (data: {
+export const MAIN_PAGE_NAMES = [
+  'HomePage', 'MainInfoPageList', 'ProfilePage',
+  'PerformerPageList', 'PerformancePageList', 'Kikkelis kokkelis page',
+] as const
+export type MainPageNames = typeof MAIN_PAGE_NAMES[number]
+
+/*
+type GetNavigationOptionsParams = (data: {
     navigation: {
       state: {
         params: {
@@ -20,26 +30,43 @@ type NavigationOptions = (data: {
     },
   }) => NavigationScreenOptions
 
-const navigationOptions: NavigationOptions = ({ navigation }) => ({
-  title: `${navigation.state.params.name}'s Profile'`,
+const getNavigationOptions: GetNavigationOptionsParams = ({ navigation }) => ({
+  title: `Ze Profile'`,
+})
+*/
+
+const getNavigationOptions = () => ({
+  title: `Ze Profile'`,
 })
 
-export default createAppContainer(createStackNavigator(
-  {
-    HomePage: {
-      screen: HomePage,
-      navigationOptions: () => ({
-        header: null,
-      }),
-    },
-    MainInfoPage: {
-      screen: MainInfoPage,
-      navigationOptions,
-    },
-    ProfilePage: {
-      screen: ProfilePage,
-    },
+type StackNavigatorOptions = { [key in MainPageNames]: {} }
+
+const stackNavigatorOptions: StackNavigatorOptions = {
+  'HomePage': {
+    screen: HomePage,
+    navigationOptions: () => ({
+      header: null,
+    }),
   },
+  'MainInfoPageList': {
+    screen: MainInfoPageList,
+    navigationOptions: getNavigationOptions,
+  },
+  'ProfilePage': {
+    screen: ProfilePage,
+  },
+  'PerformerPageList': {
+    screen: PerformerPageList,
+  },
+  'PerformancePageList': {
+    screen: PerformancePageList,
+  },
+  'Kikkelis kokkelis page': {
+    screen: ProfilePage,
+  },
+}
+
+export default createAppContainer(createStackNavigator(stackNavigatorOptions,
   {
     initialRouteName: 'HomePage',
   },

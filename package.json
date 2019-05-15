@@ -2,24 +2,30 @@
   "name": "naamapp",
   "description": "Official Naamat festival app",
   "author": "Anssi Herranen <anssi.herranen@iki.fi> (https://www.linkedin.com/in/anssiherranen/)",
-  "license" : "BSD-3-Clause",
-  "version": "0.0.1",
+  "license": "BSD-3-Clause",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
+    "build:debug": "(cd android; ./gradlew assembleRelease)",
     "build:release": "(cd android; ./gradlew assembleRelease)",
+    "cache:clear": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn && yarn start -- --reset-cache",
     "lint": "tslint src/**/*.ts{,x}",
     "lint:fix": "tslint --fix src/**/*.ts{,x}",
     "run:android": "REACT_DEBUGGER=react-native-debugger react-native run-android",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "start:clearcache": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
+    "test": "jest",
+    "shake": "adb shell input keyevent 82"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.2.1",
+    "@react-native-community/netinfo": "^1.4.0",
     "react": "16.8.3",
     "react-native": "0.59.1",
     "react-native-config": "^0.11.7",
+    "react-native-device-info": "^1.0.0",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-markdown-renderer": "^3.2.8",
-    "react-native-restart": "^0.0.9",
     "react-navigation": "^3.4.1",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
@@ -31,7 +37,6 @@
     "@types/jest": "^24.0.11",
     "@types/react": "^16.8.8",
     "@types/react-native": "^0.57.41",
-    "@types/react-native-restart": "^0.0.0",
     "@types/react-redux": "^7.0.4",
     "@types/react-test-renderer": "^16.8.1",
     "babel-jest": "^24.5.0",
@@ -46,22 +51,5 @@
   },
   "jest": {
     "preset": "react-native"
-  },
-  "importSort": {
-    ".ts, .tsx": {
-      "parser": "typescript",
-      "style": "module",
-      "options": {
-        "ignoreCase": false,
-        "ignoreDeclarationSort": false,
-        "ignoreMemberSort": false,
-        "memberSyntaxSortOrder": [
-          "none",
-          "all",
-          "multiple",
-          "single"
-        ]
-      }
-    }
   }
 }

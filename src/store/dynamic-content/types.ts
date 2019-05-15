@@ -1,30 +1,16 @@
 import { AnyAction } from 'redux'
 
-export interface SetMainInfoPagesAction extends AnyAction {
-  mainInfoPages: MainInfoPage[],
+import { DynamicContentResponse } from '../../utils/types/dynamic-content'
+
+export type SetDynamicContentAction = AnyAction & DynamicContentResponse
+
+export type SetSyncedAction = AnyAction & {
+  synced: string,
 }
 
-export interface HeaderImage {
-  url: string,
-  width: number,
-  height: number,
-}
+export type DynamicContentAction = SetDynamicContentAction | SetSyncedAction
 
-export interface MainInfoPage {
-  // [x: string]: string | number | undefined
-  content: string,
-  createdAt: string,
-  headerImage: HeaderImage,
-  title: string,
-  updatedAt: string,
-  order: number,
-}
-
-export interface DynamicContent {
-  mainInfoPages: MainInfoPage[],
-  synced: string,     // 2019-03-16T20:14:23.230Z
-}
-
-const storePrefix: string = 'pages'
+const storePrefix: string = 'dynamicContent'
 export const SYNC: string = `${storePrefix}/SYNC`
-export const SET_MAIN_INFO_PAGES: string = `${storePrefix}/SET_MAIN_INFO_PAGES`
+export const SET_DYNAMIC_CONTENT: string = `${storePrefix}/SET_DYNAMIC_CONTENT`
+export const SET_SYNCED: string = `${storePrefix}/SET_SYNCED`

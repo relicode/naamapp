@@ -1,21 +1,32 @@
 import React, { Component } from 'react'
-/* import { Platform } from 'react-native' */
+import { AppState, AppStateStatus } from 'react-native'
 import { Provider } from 'react-redux'
+
+import NetInfo from '@react-native-community/netinfo'
 
 import MainErrorBoundary from './components/utils/MainErrorBoundary'
 import StackContainer from './components/utils/StackContainer'
-import store from './store'
-import { get } from './utils/requests'
+import store, { action } from './store'
+import { APP_STATE_CHANGE, IS_ONLINE_CHANGE } from './store/app-state/types'
 
 export default class App extends Component<{}> {
-  public sync = async () => {
-    const pages = await get('/main-pages') as Page[]
-    this.setState({ pages })
+
+  public handleAppStateChange = (appStateStatus: AppStateStatus) => {
+    action({ type: APP_STATE_CHANGE, appStateStatus })
   }
 
-  public async componentDidMount() {
-    this.sync()
-    setInterval(this.sync, 1000 * 60)
+  public async handleNetworkStatusChange() {
+    const isOnline = await NetInfo.isConnected.fetch()
+    action({ type: IS_ONLINE_CHANGE, isOnline })
+  }
+
+  public componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange)
+    NetInfo.addEventListener('connectionChange', this.handleNetworkStatusChange)
+  }
+
+  public componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange)
   }
 
   public render() {

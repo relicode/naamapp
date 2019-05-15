@@ -1,53 +1,52 @@
-import React, { Component, Fragment } from 'react'
-import { Button, ScrollView, Text } from 'react-native'
-import { Alert } from 'react-native'
-import { NavigationScreenProps } from 'react-navigation'
-import { MapStateToProps, connect } from 'react-redux'
+import React, { Component } from 'react'
+import { Alert, Text, TouchableHighlight, View } from 'react-native'
+import { NavigationEvents, NavigationScreenProps } from 'react-navigation'
 
 import { action } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
-import { ApplicationState } from '../../store/types'
-import { Page } from '../MainInfoPage/types'
-import AppStateIndicator from '../utils/AppStateIndicator'
+import commonStyles from '../../styles/common'
+import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
+import { MAIN_PAGE_NAMES, MainPageNames } from '../utils/StackContainer'
+import landingPageStyles from './styles'
 
 const { alert } = Alert
+const { rowStyle, columnStyle, textHeader } = commonStyles
+const { landingPageButtonStyle } = landingPageStyles
 
-interface StateProps {
-  mainInfoPages: Page[],
-}
+type HomePageProps = NavigationScreenProps
 
-interface HomePageProps extends NavigationScreenProps, StateProps {}
-
-class HomePage extends Component<HomePageProps> {
-  public handlePagePress(page: Page) {
+export default class HomePage extends Component<HomePageProps> {
+  public handlePagePress(page: MainInfoPageRecord) {
     alert(page.title, page.content)
   }
 
-  public componentDidMount() {
-    action({ type: SYNC })
+  public renderLandingPageButton(text: string, page: MainPageNames) {
+    return (
+      <TouchableHighlight
+        key={text}
+        underlayColor="white"
+        activeOpacity={0.95}
+        style={landingPageButtonStyle}
+        onPress={() => this.props.navigation.navigate(page)}
+      >
+        <Text style={textHeader}>{text}</Text>
+      </TouchableHighlight>
+    )
   }
 
   public render() {
     return (
-      <ScrollView>
-        <AppStateIndicator />
-        <Text>{process.env.NODE_ENV}</Text>
-        {this.props.mainInfoPages.map((page: Page) => (
-          <Fragment key={page.order}>
-            <Button
-              title={`${page.createdAt.substr(0, 10)} - ${page.title}`}
-              onPress={() => this.props.navigation.navigate('MainInfoPage', page)}
-            />
-            <Text></Text>
-          </Fragment>
-        ))}
-      </ScrollView>
+      <View style={rowStyle}>
+        <NavigationEvents
+          onWillFocus={() => action({ type: SYNC })}
+        />
+        <View style={columnStyle}>
+          {MAIN_PAGE_NAMES.slice(0, 3).map((p) => this.renderLandingPageButton(p, p))}
+        </View>
+        <View style={columnStyle}>
+          {MAIN_PAGE_NAMES.slice(3).map((p) => this.renderLandingPageButton(p, p))}
+        </View>
+      </View>
     )
   }
 }
-
-const mapStateToProps: MapStateToProps<StateProps, {}, ApplicationState> = (state) => ({
-  mainInfoPages: state.dynamicContent.mainInfoPages,
-})
-
-export default connect(mapStateToProps)(HomePage)

@@ -1,21 +1,43 @@
-import { AnyAction, Reducer } from 'redux'
+import { Reducer } from 'redux'
 
-import { DynamicContent, SET_MAIN_INFO_PAGES } from './types'
+import { DynamicContent } from '../../utils/types/dynamic-content'
+import {
+  DynamicContentAction,
+  SET_DYNAMIC_CONTENT,
+  SET_SYNCED,
+  SetDynamicContentAction,
+} from './types'
 
 export const initialState: DynamicContent = {
   mainInfoPages: [],
+  performers: [],
+  performances: [],
   synced: '',
 }
 
-const reducer: Reducer<DynamicContent, AnyAction> =
-  (state = initialState, action): DynamicContent => {
-    const { type, mainInfoPages } = action
+const reducer: Reducer<any, DynamicContentAction> =
+  (state = initialState, action: DynamicContentAction): DynamicContent => {
+    const { type, synced } = action
     switch (type) {
-      case SET_MAIN_INFO_PAGES:
-        return { ...state, mainInfoPages }
+      case SET_DYNAMIC_CONTENT:
+        const { mainInfoPages, performers, performances } = action as SetDynamicContentAction
+        const newState = { ...state, synced }
+        if (mainInfoPages) {
+          newState.mainInfoPages = mainInfoPages
+        }
+        if (performers) {
+          newState.performers = performers
+        }
+        if (performances) {
+          newState.performances = performances
+        }
+
+        return newState
+      case SET_SYNCED:
+        return { ...state, synced }
       default:
         return state
     }
-  }
+}
 
 export default reducer

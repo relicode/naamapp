@@ -1,28 +1,59 @@
 import React, { Component } from 'react'
-import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
-import Markdown from 'react-native-markdown-renderer'
+import { Dimensions, ImageBackground, Text, TouchableHighlight } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
 import { NavigationScreenProps } from 'react-navigation'
-import { MapStateToProps, connect } from 'react-redux'
+import { connect, MapStateToProps } from 'react-redux'
 
 import { ReduxStoreState } from '../../store'
-import { PerformerRecord } from '../../utils/types/dynamic-content'
+import { PerformerRecord } from '../../utils/types/dynamic-content'
 
 interface StateProps {
-  performerPages: PerformerRecord[],
+  performers: PerformerRecord[],
 }
 
 class PerformerPageList extends Component<StateProps & NavigationScreenProps> {
   public render() {
+    const screenWidth = Math.round(Dimensions.get('window').width)
     return (
-      <ScrollView>
-        {this.props.performerPages.map((p) => <Text key={p.name}>{JSON.stringify(p, null, 2)}</Text>)}
-      </ScrollView>
+      <FlatList
+        data={this.props.performers.map((p) => ({ ...p, key: p.name }))}
+        renderItem={({ item }) => {
+          const { headerImage } = item
+          const imageHeight = headerImage ? headerImage.height : 768
+          const imageWidth = headerImage ? headerImage.width : 1024
+          return (
+            <TouchableHighlight
+              // onPress={() => this.props.navigation.navigate('MainInfoPage', { page: item, title: item.title })}
+              onPress={() => console.log('eeh')}
+            >
+              <ImageBackground
+                source={headerImage
+                  ? { uri: `https://${item.headerImage.url}` }
+                  : require('../../assets/images/default-image.jpg')
+                }
+                style={{
+                  width: screenWidth,
+                  height: imageHeight * screenWidth / imageWidth,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text style={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', fontSize: 36, padding: 5 }}
+                >
+                  {item.name}
+                </Text>
+              </ImageBackground>
+            </TouchableHighlight>
+          )
+        }}
+      />
     )
   }
 }
 
 const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxStoreState> = (state) => ({
-  performerPages: state.dynamicContent.performers,
+  performers: state.dynamicContent.performers,
 })
 
 export default connect(mapStateToProps)(PerformerPageList)

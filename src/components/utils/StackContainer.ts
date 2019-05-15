@@ -63,6 +63,7 @@ const stackNavigatorOptions: StackNavigatorOptions = {
   },
   'PerformerPageList': {
     screen: PerformerPageList,
+    navigationOptions: () => ({ title: 'Esiintyjät' }),
   },
   'PerformancePageList': {
     screen: PerformancePageList,

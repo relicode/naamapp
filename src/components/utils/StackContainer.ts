@@ -47,6 +47,12 @@ https://stackoverflow.com/questions/53420564/react-navigation-header-title-cut-o
 
 type StackNavigatorOptions = { [key in PageNames]: {} }
 
+const defaultNavigationOptions = {
+  headerTitleStyle: {
+    fontFamily: 'roboto',
+  },
+}
+
 const stackNavigatorOptions: StackNavigatorOptions = {
   HomePage: {
     screen: HomePage,
@@ -56,14 +62,15 @@ const stackNavigatorOptions: StackNavigatorOptions = {
   },
   MainInfoPageList: {
     screen: MainInfoPageList,
-    navigationOptions: () => ({ title: 'Yleisinfo' }),
+    navigationOptions: () => ({ ...defaultNavigationOptions, title: 'Yleisinfo' }),
   },
   PerformerPageList: {
     screen: PerformerPageList,
-    navigationOptions: () => ({ title: 'Esiintyjät' }),
+    navigationOptions: () => ({ ...defaultNavigationOptions, title: 'Esiintyjät' }),
   },
   DynamicContentPage: {
     screen: DynamicContentPage,
+    navigationOptions: () => ({ ...defaultNavigationOptions }),
   },
   ProfilePage: {
     screen: ProfilePage,

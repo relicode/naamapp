@@ -19,7 +19,7 @@ class MainInfoPageList extends Component<StateProps & NavigationScreenProps> {
         data={this.props.mainInfoPages.map((p) => ({ ...p, key: p.title }))}
         renderItem={({ item }: { item: MainInfoPageRecord }) => (
           <TouchableHighlight
-            onPress={() => this.props.navigation.navigate('MainInfoPage', { page: item, title: item.title })}
+            onPress={() => this.props.navigation.navigate('DynamicContentPage', { page: item, title: item.title })}
           >
             <ListImageBackground
               headerImage={item.headerImage}

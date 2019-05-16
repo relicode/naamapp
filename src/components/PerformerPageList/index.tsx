@@ -25,8 +25,10 @@ class PerformerPageList extends Component<StateProps & NavigationScreenProps> {
           }
           return (
             <TouchableHighlight
-              // onPress={() => this.props.navigation.navigate('MainInfoPage', { page: item, title: item.title })}
-              onPress={() => console.log('eeh')}
+              onPress={() => this.props.navigation.navigate(
+                'DynamicContentPage',
+                { page: { headerImage, content: item.description }, title: name },
+              )}
             >
               <ListImageBackground {...listImageProps} />
             </TouchableHighlight>

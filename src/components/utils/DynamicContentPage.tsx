@@ -4,11 +4,6 @@ import Markdown from 'react-native-markdown-renderer'
 import { NavigationScreenProps } from 'react-navigation'
 
 export default class DynamicContentPage extends Component<{} & NavigationScreenProps> {
-  public static navigationOptions = ({ navigation }: NavigationScreenProps) => {
-    return {
-      title: navigation.getParam('title', '😒'),
-    }
-  }
   public render() {
     const { content, headerImage } = this.props.navigation.getParam('page')
     return (

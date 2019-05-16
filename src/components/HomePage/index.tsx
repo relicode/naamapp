@@ -6,7 +6,7 @@ import { action } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
 import commonStyles from '../../styles/common'
 import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
-import { MAIN_PAGE_NAMES, MainPageNames } from '../utils/StackContainer'
+import { MAIN_PAGE_NAMES, MainPageNames, pageNameMap } from '../utils/StackContainer'
 import landingPageStyles from './styles'
 
 const { alert } = Alert
@@ -29,7 +29,7 @@ export default class HomePage extends Component<HomePageProps> {
         style={landingPageButtonStyle}
         onPress={() => this.props.navigation.navigate(page)}
       >
-        <Text style={textHeader}>{text}</Text>
+        <Text style={textHeader}>{pageNameMap[text as MainPageNames] || text}</Text>
       </TouchableHighlight>
     )
   }

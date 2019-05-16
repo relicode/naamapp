@@ -15,6 +15,14 @@ export const PAGE_NAMES = [...MAIN_PAGE_NAMES, 'DynamicContentPage'] as const
 
 export type MainPageNames = typeof MAIN_PAGE_NAMES[number]
 export type PageNames = typeof PAGE_NAMES[number]
+export type  PageNameMap = {
+  [key in PageNames]?: string
+}
+
+export const pageNameMap: PageNameMap = {
+  MainInfoPageList: 'Yleistä',
+  PerformerPageList: 'Esiintyjät',
+}
 
 /*
 type GetNavigationOptionsParams = (data: {
@@ -47,30 +55,33 @@ https://stackoverflow.com/questions/53420564/react-navigation-header-title-cut-o
 
 type StackNavigatorOptions = { [key in PageNames]: {} }
 
-const defaultNavigationOptions = {
+const getDefaultNavigationOptions = (navigation: any, additionalOptions = {}) => ({
   headerTitleStyle: {
     fontFamily: 'roboto',
   },
-}
+  title: pageNameMap[navigation.state.routeName as PageNames] || '😒',
+  ...additionalOptions,
+})
 
 const stackNavigatorOptions: StackNavigatorOptions = {
   HomePage: {
     screen: HomePage,
-    navigationOptions: () => ({
-      header: null,
-    }),
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
   },
   MainInfoPageList: {
     screen: MainInfoPageList,
-    navigationOptions: () => ({ ...defaultNavigationOptions, title: 'Yleisinfo' }),
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation),
   },
   PerformerPageList: {
     screen: PerformerPageList,
-    navigationOptions: () => ({ ...defaultNavigationOptions, title: 'Esiintyjät' }),
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation),
   },
   DynamicContentPage: {
     screen: DynamicContentPage,
-    navigationOptions: () => ({ ...defaultNavigationOptions }),
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
+      navigation,
+      { title: navigation.getParam('title', '😒') },
+    ),
   },
   ProfilePage: {
     screen: ProfilePage,

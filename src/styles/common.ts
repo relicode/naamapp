@@ -18,7 +18,12 @@ const textHeader: TextStyle = {
   fontSize: 24,
 }
 
+const headerTitle = {
+  fontFamily: 'roboto',
+}
+
 export default StyleSheet.create({
+  headerTitle,
   viewStyle,
   columnStyle,
   rowStyle,

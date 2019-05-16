@@ -1,28 +1,46 @@
 import React, { Component } from 'react'
-import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
-import Markdown from 'react-native-markdown-renderer'
+import { TouchableHighlight } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
 import { NavigationScreenProps } from 'react-navigation'
-import { MapStateToProps, connect } from 'react-redux'
+import { connect, MapStateToProps } from 'react-redux'
 
 import { ReduxStoreState } from '../../store'
-import { PerformerRecord } from '../../utils/types/dynamic-content'
+import { PerformerRecord } from '../../utils/types/dynamic-content'
+import ListImageBackground from '../utils/ListImageBackground'
 
 interface StateProps {
-  performerPages: PerformerRecord[],
+  performers: PerformerRecord[],
 }
 
 class PerformerPageList extends Component<StateProps & NavigationScreenProps> {
   public render() {
     return (
-      <ScrollView>
-        {this.props.performerPages.map((p) => <Text key={p.name}>{JSON.stringify(p, null, 2)}</Text>)}
-      </ScrollView>
+      <FlatList
+        data={this.props.performers.map((p) => ({ ...p, key: p.name }))}
+        renderItem={({ item }) => {
+          const { headerImage, name } = item
+          const listImageProps = {
+            headerImage,
+            title: name,
+          }
+          return (
+            <TouchableHighlight
+              onPress={() => this.props.navigation.navigate(
+                'DynamicContentPage',
+                { page: { headerImage, content: item.description }, title: name },
+              )}
+            >
+              <ListImageBackground {...listImageProps} />
+            </TouchableHighlight>
+          )
+        }}
+      />
     )
   }
 }
 
 const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxStoreState> = (state) => ({
-  performerPages: state.dynamicContent.performers,
+  performers: state.dynamicContent.performers,
 })
 
 export default connect(mapStateToProps)(PerformerPageList)

@@ -1,17 +1,17 @@
 import { createAppContainer, createStackNavigator, NavigationScreenOptions } from 'react-navigation'
 
 import HomePage from '../HomePage'
-import MainInfoPage from '../MainInfoPage'
 import MainInfoPageList from '../MainInfoPageList'
 import PerformancePageList from '../PerformancePageList'
 import PerformerPageList from '../PerformerPageList'
 import ProfilePage from '../ProfilePage'
+import DynamicContentPage from './DynamicContentPage'
 
 export const MAIN_PAGE_NAMES = [
   'HomePage', 'MainInfoPageList', 'ProfilePage',
-  'PerformerPageList', 'PerformancePageList', 'Kikkelis kokkelis page',
+  'PerformerPageList', 'PerformancePageList','HomePage',
 ] as const
-export const PAGE_NAMES = [...MAIN_PAGE_NAMES, 'MainInfoPage'] as const
+export const PAGE_NAMES = [...MAIN_PAGE_NAMES, 'DynamicContentPage'] as const
 
 export type MainPageNames = typeof MAIN_PAGE_NAMES[number]
 export type PageNames = typeof PAGE_NAMES[number]
@@ -36,39 +36,47 @@ type GetNavigationOptionsParams = (data: {
 const getNavigationOptions: GetNavigationOptionsParams = ({ navigation }) => ({
   title: `Ze Profile'`,
 })
+*/
 
-const getNavigationOptions = () => ({
-  // title: `Ze Profile'`,
-})
+/* HeaderTitle issue: (text slicing off)
+This happens to me as well on a OnePlus 5T, and I didn't change the font myself.
+Adding fontFamily: 'roboto' to headerTitleStyle fixes it.
+
+https://stackoverflow.com/questions/53420564/react-navigation-header-title-cut-off
 */
 
 type StackNavigatorOptions = { [key in PageNames]: {} }
 
+const defaultNavigationOptions = {
+  headerTitleStyle: {
+    fontFamily: 'roboto',
+  },
+}
+
 const stackNavigatorOptions: StackNavigatorOptions = {
-  'HomePage': {
+  HomePage: {
     screen: HomePage,
     navigationOptions: () => ({
       header: null,
     }),
   },
-  'MainInfoPageList': {
+  MainInfoPageList: {
     screen: MainInfoPageList,
-    navigationOptions: () => ({ title: 'Yleisinfo' }),
+    navigationOptions: () => ({ ...defaultNavigationOptions, title: 'Yleisinfo' }),
   },
-  'MainInfoPage': {
-    screen: MainInfoPage,
-  },
-  'ProfilePage': {
-    screen: ProfilePage,
-  },
-  'PerformerPageList': {
+  PerformerPageList: {
     screen: PerformerPageList,
+    navigationOptions: () => ({ ...defaultNavigationOptions, title: 'Esiintyjät' }),
   },
-  'PerformancePageList': {
-    screen: PerformancePageList,
+  DynamicContentPage: {
+    screen: DynamicContentPage,
+    navigationOptions: () => ({ ...defaultNavigationOptions }),
   },
-  'Kikkelis kokkelis page': {
+  ProfilePage: {
     screen: ProfilePage,
+  },
+  PerformancePageList: {
+    screen: PerformancePageList,
   },
 }
 

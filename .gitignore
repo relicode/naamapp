@@ -60,4 +60,4 @@ buck-out/
 *.jsbundle
 
 # .env files
-.env*
+.env

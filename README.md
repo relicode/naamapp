@@ -45,7 +45,7 @@ Follow the [Watchman](https://facebook.github.io/watchman/docs/install.html#buil
 Run `yarn` to install dependencies.
 
 ## Setup
-In .env file, set the following environment variables:
+Copy the .env.base file as .env and set the following environment variables:
 
 `API_BASE_URL` Base url for NaamApi
 

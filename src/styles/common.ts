@@ -18,6 +18,27 @@ const textHeader: TextStyle = {
   fontSize: 24,
 }
 
+const textHeaderSmall: TextStyle = {
+  fontSize: 18,
+}
+
+const yellowBackground: ViewStyle = {
+  backgroundColor: '#eed239',
+}
+
+const greenBackground: ViewStyle = {
+  backgroundColor: '#5cdd8a',
+}
+
+const pinkBackground: ViewStyle = {
+  backgroundColor: '#feb5ff',
+}
+
+const magentaBackground: ViewStyle = {
+  backgroundColor: '#f36ebd',
+}
+
+// Used for cirumventing bug in OnePlus models
 const headerTitle = {
   fontFamily: 'roboto',
 }
@@ -28,4 +49,9 @@ export default StyleSheet.create({
   columnStyle,
   rowStyle,
   textHeader,
+  textHeaderSmall,
+  yellowBackground,
+  greenBackground,
+  pinkBackground,
+  magentaBackground,
 })

@@ -2,9 +2,15 @@ import { AnyAction } from 'redux'
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-export const DYNAMIC_CONTENT_TYPES = ['mainInfoPage', 'performer', 'performance'] as const
+export const PERFORMANCE_LOCATIONS = ['Riihi', 'Navetta', 'Sideshow-teltta'] as const
+export type PerformanceLocationName = typeof PERFORMANCE_LOCATIONS[number]
+export type LocationPerformances = {
+  [x in PerformanceLocationName]?: PerformanceRecord[]
+}
 
+export const DYNAMIC_CONTENT_TYPES = ['mainInfoPage', 'performer', 'performance'] as const
 export type DynamicContentTypes = typeof DYNAMIC_CONTENT_TYPES[number]
+
 export type DynamicContentFieldTypes = MainInfoPageFields | PerformerFields | PerformanceFields
 export type DynamicContentRecord = MainInfoPageRecord | PerformerRecord | PerformanceRecord
 
@@ -16,13 +22,13 @@ export interface HeaderImage {
 
 export interface RecordFields {
   createdAt: string,
-  headerImage: HeaderImage,
+  headerImage?: HeaderImage,
   updatedAt: string,
 }
 
 export interface MainInfoPageFields {
   content: string,
-  headerImage: any
+  headerImage?: any
   order: number,
   title: string,
 }
@@ -35,12 +41,12 @@ export interface PerformerFields {
 }
 
 export interface PerformanceFields {
-  description: string,
-  headerImage: any,
+  description?: string,
+  headerImage?: any,
   name: string,
   startTime: string,
   endTime: string,
-  performers: any, // Array<Entry<PerformerFields>>,
+  performers?: any, // Array<Entry<PerformerFields>>,
   location: string,
 }
 

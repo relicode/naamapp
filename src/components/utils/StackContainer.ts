@@ -9,10 +9,10 @@ import ProfilePage from '../ProfilePage'
 import DynamicContentPage from './DynamicContentPage'
 
 export const MAIN_PAGE_NAMES = [
-  'HomePage', 'MainInfoPageList', 'ProfilePage',
-  'PerformerPageList', 'PerformancePageList','HomePage',
+  'Naamat20Years', 'MainInfoPageList',
+  'PerformerPageList', 'PerformancePageList',
 ] as const
-export const PAGE_NAMES = [...MAIN_PAGE_NAMES, 'DynamicContentPage'] as const
+export const PAGE_NAMES = [...MAIN_PAGE_NAMES, 'HomePage', 'DynamicContentPage'] as const
 
 export type MainPageNames = typeof MAIN_PAGE_NAMES[number]
 export type PageNames = typeof PAGE_NAMES[number]
@@ -21,12 +21,13 @@ export type  PageNameMap = {
 }
 
 export const pageNameMap: PageNameMap = {
-  MainInfoPageList: 'Yleistä',
+  Naamat20Years: 'Naamat 20v',
+  MainInfoPageList: 'Info ja palvelut',
   PerformerPageList: 'Esiintyjät',
   PerformancePageList: 'Aikataulu',
 }
 
-const { magentaBackground } = commonStyles
+const { headerTitle, magentaBackground } = commonStyles
 
 /* HeaderTitle issue: (text slicing off)
 This happens to me as well on a OnePlus 5T, and I didn't change the font myself.
@@ -41,15 +42,17 @@ const getDefaultNavigationOptions = (navigation: any, additionalOptions = {}) =>
   headerStyle: {
     ...magentaBackground,
   },
-  headerTitleStyle: {
-    fontFamily: 'roboto',
-  },
+  headerTitleStyle: headerTitle,
   title: pageNameMap[navigation.state.routeName as PageNames] || '😒',
   ...additionalOptions,
 })
 
 const stackNavigatorOptions: StackNavigatorOptions = {
   HomePage: {
+    screen: HomePage,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
+  },
+  Naamat20Years: {
     screen: HomePage,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
   },
@@ -63,7 +66,9 @@ const stackNavigatorOptions: StackNavigatorOptions = {
     screen: PerformerPageList,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
       navigation, getDefaultNavigationOptions(navigation),
-    ),
+    ),  ProfilePage: {
+      screen: ProfilePage,
+    },
   },
   DynamicContentPage: {
     screen: DynamicContentPage,
@@ -71,9 +76,6 @@ const stackNavigatorOptions: StackNavigatorOptions = {
       navigation,
       { title: navigation.getParam('title', '😒') },
     ),
-  },
-  ProfilePage: {
-    screen: ProfilePage,
   },
   PerformancePageList: {
     screen: PerformancePageList,

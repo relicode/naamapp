@@ -1,53 +1,248 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native'
+import { Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native'
 
-const viewStyle: ViewStyle = {
+export const BLACK = '#000000'
+export const WHITE = '#ffffff'
+export const YELLOW = '#eed239'
+export const GREEN = '#5cdd8a'
+export const PINK = '#feb5ff'
+export const MAGENTA = '#f36ebd'
+
+const DEFAULT_FONT_FAMILY = Platform.OS === 'ios' ? 'Times New Roman' : 'serif'
+
+const naamatView: ViewStyle = {
   flex: 1,
-  flexDirection: 'column',
+  backgroundColor: YELLOW,
 }
 
 const rowStyle: ViewStyle = {
-  ...viewStyle,
+  ...naamatView,
   flexDirection: 'row',
 }
 
 const columnStyle: ViewStyle = {
-  ...viewStyle,
+  ...naamatView,
+  flexDirection: 'column',
+}
+
+const naamatText: TextStyle = {
+  fontFamily: DEFAULT_FONT_FAMILY,
+  color: BLACK,
+}
+
+const textHeaderHuge: TextStyle = {
+  ...naamatText,
+  fontSize: 36,
 }
 
 const textHeader: TextStyle = {
+  ...naamatText,
   fontSize: 24,
 }
 
 const textHeaderSmall: TextStyle = {
+  ...naamatText,
   fontSize: 18,
 }
 
 const yellowBackground: ViewStyle = {
-  backgroundColor: '#eed239',
+  backgroundColor: YELLOW,
 }
 
 const greenBackground: ViewStyle = {
-  backgroundColor: '#5cdd8a',
+  backgroundColor: GREEN,
 }
 
 const pinkBackground: ViewStyle = {
-  backgroundColor: '#feb5ff',
+  backgroundColor: PINK,
 }
 
 const magentaBackground: ViewStyle = {
-  backgroundColor: '#f36ebd',
+  backgroundColor: MAGENTA,
 }
 
 // Used for cirumventing bug in OnePlus models
 const headerTitle = {
-  fontFamily: 'roboto',
+  fontFamily: DEFAULT_FONT_FAMILY,
 }
 
+/*
+export const styles = StyleSheet.create({
+  root: {},
+  view: {},
+  codeBlock: {
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
+    backgroundColor: '#f5f5f5',
+    padding: 10,
+    borderRadius: 4,
+  },
+  codeInline: {
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
+    backgroundColor: '#f5f5f5',
+    padding: 10,
+    borderRadius: 4,
+  },
+  del: {
+    backgroundColor: '#000000',
+  },
+  em: {
+    fontStyle: 'italic',
+  },
+  headingContainer: {
+    flexDirection: 'row',
+  },
+  heading: {},
+  heading1: {
+    fontSize: 32,
+  },
+  heading2: {
+    fontSize: 24,
+  },
+  heading3: {
+    fontSize: 18,
+  },
+  heading4: {
+    fontSize: 16,
+  },
+  heading5: {
+    fontSize: 13,
+  },
+  heading6: {
+    fontSize: 11,
+  },
+  hr: {
+    backgroundColor: '#000000',
+    height: 1,
+  },
+  blockquote: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    margin: 20,
+    backgroundColor: '#CCCCCC',
+  },
+  inlineCode: {
+    borderRadius: 3,
+    borderWidth: 1,
+    fontFamily: 'Courier',
+    fontWeight: 'bold',
+  },
+  list: {},
+  listItem: {
+    flex: 1,
+    flexWrap: 'wrap',
+    // backgroundColor: 'green',
+  },
+  listUnordered: {},
+
+  listUnorderedItem: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+
+  listUnorderedItemIcon: {
+    marginLeft: 10,
+    marginRight: 10,
+    ...Platform.select({
+      [PlatformEnum.IOS]: {
+        lineHeight: 36,
+      },
+      [PlatformEnum.ANDROID]: {
+        lineHeight: 30,
+      },
+    }),
+  },
+  listUnorderedItemText: {
+    fontSize: 20,
+    lineHeight: 20,
+  },
+
+  listOrdered: {},
+  listOrderedItem: {
+    flexDirection: 'row',
+  },
+  listOrderedItemIcon: {
+    marginLeft: 10,
+    marginRight: 10,
+    ...Platform.select({
+      [PlatformEnum.IOS]: {
+        lineHeight: 36,
+      },
+      [PlatformEnum.ANDROID]: {
+        lineHeight: 30,
+      },
+    }),
+  },
+  listOrderedItemText: {
+    fontWeight: 'bold',
+    lineHeight: 20,
+  },
+  paragraph: {
+    marginTop: 10,
+    marginBottom: 10,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  hardbreak: {
+    width: '100%',
+    height: 1,
+  },
+  strong: {
+    fontWeight: 'bold',
+  },
+  table: {
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderRadius: 3,
+  },
+  tableHeader: {},
+  tableHeaderCell: {
+    flex: 1,
+    // color: '#000000',
+    padding: 5,
+    // backgroundColor: 'green',
+  },
+  tableRow: {
+    borderBottomWidth: 1,
+    borderColor: '#000000',
+    flexDirection: 'row',
+  },
+  tableRowCell: {
+    flex: 1,
+    padding: 5,
+  },
+  text: {},
+  strikethrough: {
+    textDecorationLine: 'line-through',
+  },
+  link: {
+    textDecorationLine: 'underline',
+  },
+  blocklink: {
+    flex: 1,
+    borderColor: '#000000',
+    borderBottomWidth: 1,
+
+  },
+  u: {
+    borderColor: '#000000',
+    borderBottomWidth: 1,
+  },
+  image: {
+    flex: 1,
+  },
+})
+*/
+
 export default StyleSheet.create({
+  naamatView,
+  naamatText,
   headerTitle,
-  viewStyle,
   columnStyle,
   rowStyle,
+  textHeaderHuge,
   textHeader,
   textHeaderSmall,
   yellowBackground,

@@ -2,6 +2,9 @@ import React, { FunctionComponent } from 'react'
 import { Dimensions, ImageBackground, Text } from 'react-native'
 
 import { HeaderImage } from '../../utils/types/dynamic-content'
+import styles from './ListImageBackgroundStyles'
+
+const { listImageBackground } = styles
 
 const DEFAULT_IMAGE_WIDTH = 1024
 const DEFAULT_IMAGE_HEIGHT = 768
@@ -30,9 +33,7 @@ const ListImageBackground: FunctionComponent<StateProps> = (props) => {
       }}
     >
       {title ? (
-        <Text style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', fontSize: 36, padding: 5 }}
-        >
+        <Text style={listImageBackground}>
           {title}
         </Text>
       ) : null}

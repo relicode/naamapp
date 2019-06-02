@@ -3,11 +3,15 @@ import { Dimensions, Image, ScrollView, View } from 'react-native'
 import Markdown from 'react-native-markdown-renderer'
 import { NavigationScreenProps } from 'react-navigation'
 
+import commonStyles from '../../styles/common'
+
+const { naamatView } = commonStyles
+
 export default class DynamicContentPage extends Component<{} & NavigationScreenProps> {
   public render() {
     const { content, headerImage } = this.props.navigation.getParam('page')
     return (
-      <ScrollView>
+      <ScrollView style={naamatView}>
         {headerImage ? (
           <Image
             source={{ uri: `https:${headerImage.url}` }}

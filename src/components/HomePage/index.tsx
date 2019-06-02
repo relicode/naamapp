@@ -6,6 +6,7 @@ import { action } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
 import commonStyles from '../../styles/common'
 import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
+import ListImageBackground from '../utils/ListImageBackground'
 import { MAIN_PAGE_NAMES, MainPageNames, pageNameMap } from '../utils/StackContainer'
 import landingPageStyles from './styles'
 
@@ -36,17 +37,23 @@ export default class HomePage extends Component<HomePageProps> {
 
   public render() {
     return (
-      <View style={rowStyle}>
-        <NavigationEvents
-          onWillFocus={() => action({ type: SYNC })}
-        />
-        <View style={columnStyle}>
-          {MAIN_PAGE_NAMES.slice(0, 3).map((p) => this.renderLandingPageButton(p, p))}
+      <View style={columnStyle}>
+        <View style={rowStyle}>
+          <ListImageBackground />
         </View>
-        <View style={columnStyle}>
-          {MAIN_PAGE_NAMES.slice(3).map((p) => this.renderLandingPageButton(p, p))}
+        <View style={rowStyle}>
+          <NavigationEvents
+            onWillFocus={() => action({ type: SYNC })}
+          />
+          <View style={columnStyle}>
+            {MAIN_PAGE_NAMES.slice(0, 2).map((p) => this.renderLandingPageButton(p, p))}
+          </View>
+          <View style={columnStyle}>
+            {MAIN_PAGE_NAMES.slice(2).map((p) => this.renderLandingPageButton(p, p))}
+          </View>
         </View>
       </View>
+
     )
   }
 }

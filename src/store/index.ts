@@ -7,7 +7,7 @@ import { DynamicContent } from '../utils/types/dynamic-content'
 import appState from './app-state/reducers'
 import { watchAppStateChange } from './app-state/sagas'
 import { AppState } from './app-state/types'
-import dynamicContent, { initialState } from './dynamic-content/reducers'
+import dynamicContent from './dynamic-content/reducers'
 import { watchSync } from './dynamic-content/sagas'
 
 const rootReducer = combineReducers({

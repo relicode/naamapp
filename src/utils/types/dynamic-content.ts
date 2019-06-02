@@ -64,7 +64,7 @@ export interface DynamicContentResponse {
 export interface DynamicContent {
   mainInfoPages: MainInfoPageRecord[],
   performers: PerformerRecord[],
-  performances: LocationPerformances,
+  performances: PerformanceRecord[],
   synced: string,
 }
 

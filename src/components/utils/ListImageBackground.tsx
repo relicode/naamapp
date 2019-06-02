@@ -29,11 +29,14 @@ const ListImageBackground: FunctionComponent<StateProps> = (props) => {
         alignItems: 'center',
       }}
     >
-      <Text style={{
-        backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', fontSize: 36, padding: 5 }}
-      >
-        {title}
-      </Text>
+      {title ? (
+        <Text style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', fontSize: 36, padding: 5 }}
+        >
+          {title}
+        </Text>
+      ) : null}
+
     </ImageBackground>
   )
 }

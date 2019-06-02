@@ -1,73 +1,100 @@
 import React, { Component, Fragment } from 'react'
-import { Dimensions, Image, Platform, ScrollView, Text, View } from 'react-native'
-import Markdown from 'react-native-markdown-renderer'
+import {
+  Alert,
+  Dimensions,
+  Image,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableHighlight,
+  View,
+} from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { connect, MapStateToProps } from 'react-redux'
 
-import store, { ReduxStoreState } from '../../store'
-import styles from '../../styles/common'
-import {
-  LocationPerformances,
-  PERFORMANCE_LOCATIONS,
-  PerformanceLocationName,
-  PerformanceRecord,
-} from '../../utils/types/dynamic-content'
+import { ReduxStoreState } from '../../store'
+import commonStyles from '../../styles/common'
+import { PerformanceLocationName, PerformanceRecord } from '../../utils/types/dynamic-content'
+import ListImageBackground from '../utils/ListImageBackground'
+import styles from './styles'
 
-const { rowStyle, columnStyle } = styles
+const { greenBackground, pinkBackground } = commonStyles
+
+const {
+  performanceRow,
+  performanceRowStart,
+  performanceRowEnd,
+  performanceRowEndContent,
+  performanceRowStartTimeAndPlace,
+  performanceRowStartPlace,
+  performanceRowStartTime,
+  performanceRowStartPerformer,
+} = styles
 
 interface StateProps {
-  performances: LocationPerformances,
+  performances: PerformanceRecord[],
 }
 
-const formatTime = (date: string): string => {
+const dayOfWeekMap = ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La']
+
+const formatTime = (date: string, dayOfWeek: boolean = false): string => {
   const newDate = new Date(date)
-  return [newDate.getHours(), newDate.getMinutes()].map((d) => String(d).padStart(2, '0')).join(':')
+  return (
+    (dayOfWeek ? `${dayOfWeekMap[newDate.getDay()]} ` : '') +
+    [newDate.getHours(), newDate.getMinutes()].map((d) => String(d).padStart(2, '0')).join(':')
+  )
 }
+
+/*
+
+            <TouchableHighlight
+              onPress={() => this.props.navigation.navigate(
+                'DynamicContentPage',
+                { page: { headerImage, content: item.description }, title: name },
+              )}
+            >
+              <ListImageBackground {...listImageProps} />
+            </TouchableHighlight>
+
+*/
 
 class PerformancePageList extends Component<StateProps & NavigationScreenProps> {
   public render() {
     const { performances } = this.props
 
-    const r = performances.Riihi || []
-    const n = performances.Navetta || []
-    const s = performances['Sideshow-teltta'] || []
-
-    const rr = r.concat(r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r)
-    const nn = r.concat(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n)
-    const ss = r.concat(s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s)
-
     return (
-      <View style={rowStyle}>
-        <ScrollView style={columnStyle}>
-          <Text style={{ fontSize: 24 }}>Riihi</Text>
-          {rr.map((p) => (
-            <View style={{ borderWidth: 2, borderColor: 'black' }} key={Math.random()}>
-              <Text>{p.name}</Text>
-              <Text>{formatTime(p.startTime)}-{formatTime(p.endTime)}</Text>
-            </View>
+      <View>
+        <ScrollView>
+          <ListImageBackground />
+          {performances.map((p, idx) => (
+            <TouchableHighlight
+              key={p.name}
+              onPress={() => this.props.navigation.navigate(
+                'DynamicContentPage',
+                { page: { headerImage: p.headerImage, content: p.description }, title: p.name },
+              )}
+            >
+              <View style={[performanceRow, idx % 2 === 1 ? greenBackground : pinkBackground]}>
+                <View style={performanceRowStart}>
+                  <Text style={performanceRowStartTimeAndPlace}>
+                    <Text style={performanceRowStartPlace}>{p.location} </Text>
+                    <Text style={performanceRowStartTime}>
+                      {formatTime(p.startTime, true)} - {formatTime(p.endTime)}
+                    </Text>
+                  </Text>
+                  <Text style={performanceRowStartPerformer}>{p.name}</Text>
+                </View>
+
+                <View style={performanceRowEnd}>
+                  <Text onPress={(ev) => {
+                    ev.preventDefault()
+                    Alert.alert(`${p.name} liked`)
+                  }} style={performanceRowEndContent}>{ '\u2661' }</Text>
+                </View>
+              </View>
+            </TouchableHighlight>
           ))}
         </ScrollView>
-
-        <ScrollView style={columnStyle}>
-          <Text style={{ fontSize: 24 }}>Navetta</Text>
-          {nn.map((p) => (
-            <View style={{ borderWidth: 2, borderColor: 'black' }} key={Math.random()}>
-              <Text>{p.name}</Text>
-              <Text>{formatTime(p.startTime)}-{formatTime(p.endTime)}</Text>
-            </View>
-          ))}
-        </ScrollView>
-
-        <ScrollView style={columnStyle}>
-          <Text style={{ fontSize: 24 }}>Sideshow-teltta</Text>
-          {ss.map((p) => (
-            <View style={{ borderWidth: 2, borderColor: 'black' }} key={Math.random()}>
-              <Text>{p.name}</Text>
-              <Text>{formatTime(p.startTime)}-{formatTime(p.endTime)}</Text>
-            </View>
-          ))}
-        </ScrollView>
-
       </View>
     )
   }

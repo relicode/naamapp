@@ -1,5 +1,6 @@
 import { createAppContainer, createStackNavigator, NavigationScreenOptions } from 'react-navigation'
 
+import commonStyles from '../../styles/common'
 import HomePage from '../HomePage'
 import MainInfoPageList from '../MainInfoPageList'
 import PerformancePageList from '../PerformancePageList'
@@ -22,29 +23,10 @@ export type  PageNameMap = {
 export const pageNameMap: PageNameMap = {
   MainInfoPageList: 'Yleistä',
   PerformerPageList: 'Esiintyjät',
+  PerformancePageList: 'Aikataulu',
 }
 
-/*
-type GetNavigationOptionsParams = (data: {
-    navigation: {
-      state: {
-        params: {
-          title: string,
-          content: string,
-          headerImage: {
-            url: string,
-            width: number,
-            height: number,
-          },
-        },
-      },
-    },
-  }) => NavigationScreenOptions
-
-const getNavigationOptions: GetNavigationOptionsParams = ({ navigation }) => ({
-  title: `Ze Profile'`,
-})
-*/
+const { magentaBackground } = commonStyles
 
 /* HeaderTitle issue: (text slicing off)
 This happens to me as well on a OnePlus 5T, and I didn't change the font myself.
@@ -56,6 +38,9 @@ https://stackoverflow.com/questions/53420564/react-navigation-header-title-cut-o
 type StackNavigatorOptions = { [key in PageNames]: {} }
 
 const getDefaultNavigationOptions = (navigation: any, additionalOptions = {}) => ({
+  headerStyle: {
+    ...magentaBackground,
+  },
   headerTitleStyle: {
     fontFamily: 'roboto',
   },
@@ -70,11 +55,15 @@ const stackNavigatorOptions: StackNavigatorOptions = {
   },
   MainInfoPageList: {
     screen: MainInfoPageList,
-    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation),
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
+      navigation, getDefaultNavigationOptions(navigation),
+    ),
   },
   PerformerPageList: {
     screen: PerformerPageList,
-    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation),
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
+      navigation, getDefaultNavigationOptions(navigation),
+    ),
   },
   DynamicContentPage: {
     screen: DynamicContentPage,
@@ -88,6 +77,9 @@ const stackNavigatorOptions: StackNavigatorOptions = {
   },
   PerformancePageList: {
     screen: PerformancePageList,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
+      navigation, getDefaultNavigationOptions(navigation),
+    ),
   },
 }
 

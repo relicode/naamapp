@@ -18,7 +18,7 @@ export default class DynamicContentPage extends Component<{} & NavigationScreenP
           />
         ) : null}
         <View style={{ padding: 15 }}>
-          <Markdown>{content}</Markdown>
+          {[].concat(content).map((c) => <Markdown key={Math.random()}>{c}</Markdown>)}
         </View>
       </ScrollView>
     )

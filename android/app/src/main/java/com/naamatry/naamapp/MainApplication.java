@@ -1,4 +1,4 @@
-package com.naamapp;
+package com.naamatry.naamapp;
 
 import android.app.Application;
 

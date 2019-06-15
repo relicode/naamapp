@@ -1,4 +1,4 @@
-package com.naamapp;
+package com.naamatry.naamapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

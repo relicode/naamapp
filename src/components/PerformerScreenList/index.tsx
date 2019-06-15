@@ -12,7 +12,7 @@ interface StateProps {
   performers: PerformerRecord[],
 }
 
-class PerformerPageList extends Component<StateProps & NavigationScreenProps> {
+class PerformerScreenList extends Component<StateProps & NavigationScreenProps> {
   public render() {
     return (
       <FlatList
@@ -26,8 +26,8 @@ class PerformerPageList extends Component<StateProps & NavigationScreenProps> {
           return (
             <TouchableHighlight
               onPress={() => this.props.navigation.navigate(
-                'DynamicContentPage',
-                { page: { headerImage, content: item.description }, title: name },
+                'DynamicContentScreen',
+                { screen: { headerImage, content: item.description }, title: name },
               )}
             >
               <ListImageBackground {...listImageProps} />
@@ -43,4 +43,4 @@ const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxS
   performers: state.dynamicContent.performers,
 })
 
-export default connect(mapStateToProps)(PerformerPageList)
+export default connect(mapStateToProps)(PerformerScreenList)

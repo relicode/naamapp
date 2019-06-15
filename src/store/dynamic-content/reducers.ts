@@ -9,7 +9,7 @@ import {
 } from './types'
 
 export const initialState: DynamicContent = {
-  mainInfoPages: [],
+  mainInfoScreens: [],
   performers: [],
   performances: [],
   synced: '',
@@ -20,10 +20,10 @@ const reducer: Reducer<any, DynamicContentAction> =
     const { type, synced } = action
     switch (type) {
       case SET_DYNAMIC_CONTENT:
-        const { mainInfoPages, performers, performances } = action as SetDynamicContentAction
+        const { mainInfoScreens, performers, performances } = action as SetDynamicContentAction
         const newState = { ...state, synced }
-        if (mainInfoPages) {
-          newState.mainInfoPages = mainInfoPages
+        if (mainInfoScreens) {
+          newState.mainInfoScreens = mainInfoScreens
         }
         if (performers) {
           newState.performers = performers

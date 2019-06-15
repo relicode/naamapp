@@ -5,21 +5,21 @@ import { NavigationScreenProps } from 'react-navigation'
 import { connect, MapStateToProps } from 'react-redux'
 
 import { ReduxStoreState } from '../../store'
-import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
+import { MainInfoScreenRecord } from '../../utils/types/dynamic-content'
 import ListImageBackground from '../utils/ListImageBackground'
 
 interface StateProps {
-  mainInfoPages: MainInfoPageRecord[],
+  mainInfoScreens: MainInfoScreenRecord[],
 }
 
-class MainInfoPageList extends Component<StateProps & NavigationScreenProps> {
+class MainInfoScreenList extends Component<StateProps & NavigationScreenProps> {
   public render() {
     return (
       <FlatList
-        data={this.props.mainInfoPages.map((p) => ({ ...p, key: p.title }))}
-        renderItem={({ item }: { item: MainInfoPageRecord }) => (
+        data={this.props.mainInfoScreens.map((p) => ({ ...p, key: p.title }))}
+        renderItem={({ item }: { item: MainInfoScreenRecord }) => (
           <TouchableHighlight
-            onPress={() => this.props.navigation.navigate('DynamicContentPage', { page: item, title: item.title })}
+            onPress={() => this.props.navigation.navigate('DynamicContentScreen', { screen: item, title: item.title })}
           >
             <ListImageBackground
               headerImage={item.headerImage}
@@ -33,7 +33,7 @@ class MainInfoPageList extends Component<StateProps & NavigationScreenProps> {
 }
 
 const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxStoreState> = (state) => ({
-  mainInfoPages: state.dynamicContent.mainInfoPages,
+  mainInfoScreens: state.dynamicContent.mainInfoScreens,
 })
 
-export default connect(mapStateToProps)(MainInfoPageList)
+export default connect(mapStateToProps)(MainInfoScreenList)

@@ -10,9 +10,9 @@ interface StateProps {
   synced: Date,
 }
 
-type ProfilePageProps = NavigationScreenProps & StateProps
+type ProfileScreenProps = NavigationScreenProps & StateProps
 
-class ProfilePage extends Component<ProfilePageProps, {}> {
+class ProfileScreen extends Component<ProfileScreenProps, {}> {
   public render() {
     return (
       <View>
@@ -30,4 +30,4 @@ const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxS
   synced: new Date(state.dynamicContent.synced),
 })
 
-export default connect(mapStateToProps)(ProfilePage)
+export default connect(mapStateToProps)(ProfileScreen)

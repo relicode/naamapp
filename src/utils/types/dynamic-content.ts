@@ -8,11 +8,11 @@ export type LocationPerformances = {
   [x in PerformanceLocationName]?: PerformanceRecord[]
 }
 
-export const DYNAMIC_CONTENT_TYPES = ['mainInfoPage', 'performer', 'performance'] as const
+export const DYNAMIC_CONTENT_TYPES = ['mainInfoScreen', 'performer', 'performance'] as const
 export type DynamicContentTypes = typeof DYNAMIC_CONTENT_TYPES[number]
 
-export type DynamicContentFieldTypes = MainInfoPageFields | PerformerFields | PerformanceFields
-export type DynamicContentRecord = MainInfoPageRecord | PerformerRecord | PerformanceRecord
+export type DynamicContentFieldTypes = MainInfoScreenFields | PerformerFields | PerformanceFields
+export type DynamicContentRecord = MainInfoScreenRecord | PerformerRecord | PerformanceRecord
 
 export interface HeaderImage {
   height: number,
@@ -26,7 +26,7 @@ export interface RecordFields {
   updatedAt: string,
 }
 
-export interface MainInfoPageFields {
+export interface MainInfoScreenFields {
   content: string,
   headerImage?: any
   order: number,
@@ -50,19 +50,19 @@ export interface PerformanceFields {
   location: string,
 }
 
-export type MainInfoPageRecord = Omit<MainInfoPageFields, 'headerImage'> & RecordFields
+export type MainInfoScreenRecord = Omit<MainInfoScreenFields, 'headerImage'> & RecordFields
 export type PerformerRecord = Omit<PerformerFields, 'headerImage'> & RecordFields
 export type PerformanceRecord = Omit<PerformanceFields, 'headerImage'> & RecordFields
 
 export interface DynamicContentResponse {
-  mainInfoPages?: MainInfoPageRecord[],
+  mainInfoScreens?: MainInfoScreenRecord[],
   performers?: PerformerRecord[],
   performances?: PerformanceRecord[],
   synced: string,
 }
 
 export interface DynamicContent {
-  mainInfoPages: MainInfoPageRecord[],
+  mainInfoScreens: MainInfoScreenRecord[],
   performers: PerformerRecord[],
   performances: PerformanceRecord[],
   synced: string,

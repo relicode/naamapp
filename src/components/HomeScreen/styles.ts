@@ -4,7 +4,7 @@ import commonStyles, { PINK } from '../../styles/common'
 
 const { columnStyle } = commonStyles
 
-const landingPageButtonStyle: ViewStyle = {
+const landingScreenButtonStyle: ViewStyle = {
   ...columnStyle,
   alignItems: 'center',
   justifyContent: 'center',
@@ -14,5 +14,5 @@ const landingPageButtonStyle: ViewStyle = {
 }
 
 export default StyleSheet.create({
-  landingPageButtonStyle,
+  landingScreenButtonStyle,
 })

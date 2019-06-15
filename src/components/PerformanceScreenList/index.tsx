@@ -57,14 +57,14 @@ const generateDynamicContent = (performance: PerformanceRecord, allPerformers: P
 
   return {
     title,
-    page: {
+    screen: {
       content: contentWithTime,
       headerImage: performerWithHeaderImage ? performerWithHeaderImage.headerImage : null,
     },
   }
 }
 
-class PerformancePageList extends Component<StateProps & NavigationScreenProps> {
+class PerformanceScreenList extends Component<StateProps & NavigationScreenProps> {
   public render() {
     const { performances, performers } = this.props
 
@@ -78,7 +78,7 @@ class PerformancePageList extends Component<StateProps & NavigationScreenProps> 
               <TouchableHighlight
                 key={p.name}
                 onPress={() => this.props.navigation.navigate(
-                  'DynamicContentPage',
+                  'DynamicContentScreen',
                   generateDynamicContent(
                     p,
                     performers
@@ -118,4 +118,4 @@ const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxS
   performers: state.dynamicContent.performers,
 })
 
-export default connect(mapStateToProps)(PerformancePageList)
+export default connect(mapStateToProps)(PerformanceScreenList)

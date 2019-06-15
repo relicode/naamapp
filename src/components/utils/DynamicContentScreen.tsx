@@ -7,9 +7,9 @@ import commonStyles from '../../styles/common'
 
 const { naamatView } = commonStyles
 
-export default class DynamicContentPage extends Component<{} & NavigationScreenProps> {
+export default class DynamicContentScreen extends Component<{} & NavigationScreenProps> {
   public render() {
-    const { content, headerImage } = this.props.navigation.getParam('page')
+    const { content, headerImage } = this.props.navigation.getParam('screen')
     return (
       <ScrollView style={naamatView}>
         {headerImage ? (

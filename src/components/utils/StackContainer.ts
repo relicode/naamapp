@@ -1,30 +1,30 @@
 import { createAppContainer, createStackNavigator, NavigationScreenOptions } from 'react-navigation'
 
 import commonStyles from '../../styles/common'
-import HomePage from '../HomePage'
-import MainInfoPageList from '../MainInfoPageList'
-import PerformancePageList from '../PerformancePageList'
-import PerformerPageList from '../PerformerPageList'
-import ProfilePage from '../ProfilePage'
-import DynamicContentPage from './DynamicContentPage'
+import HomeScreen from '../HomeScreen'
+import MainInfoScreenList from '../MainInfoScreenList'
+import PerformanceScreenList from '../PerformanceScreenList'
+import PerformerScreenList from '../PerformerScreenList'
+import ProfileScreen from '../ProfileScreen'
+import DynamicContentScreen from './DynamicContentScreen'
 
-export const MAIN_PAGE_NAMES = [
-  'Naamat20Years', 'MainInfoPageList',
-  'PerformerPageList', 'PerformancePageList',
+export const MAIN_SCREEN_NAMES = [
+  'Naamat20Years', 'MainInfoScreenList',
+  'PerformerScreenList', 'PerformanceScreenList',
 ] as const
-export const PAGE_NAMES = [...MAIN_PAGE_NAMES, 'HomePage', 'DynamicContentPage'] as const
+export const SCREEN_NAMES = [...MAIN_SCREEN_NAMES, 'HomeScreen', 'DynamicContentScreen'] as const
 
-export type MainPageNames = typeof MAIN_PAGE_NAMES[number]
-export type PageNames = typeof PAGE_NAMES[number]
-export type  PageNameMap = {
-  [key in PageNames]?: string
+export type MainScreenNames = typeof MAIN_SCREEN_NAMES[number]
+export type ScreenNames = typeof SCREEN_NAMES[number]
+export type  ScreenNameMap = {
+  [key in ScreenNames]?: string
 }
 
-export const pageNameMap: PageNameMap = {
+export const screenNameMap: ScreenNameMap = {
   Naamat20Years: 'Naamat 20v',
-  MainInfoPageList: 'Info ja palvelut',
-  PerformerPageList: 'Esiintyjät',
-  PerformancePageList: 'Aikataulu',
+  MainInfoScreenList: 'Info ja palvelut',
+  PerformerScreenList: 'Esiintyjät',
+  PerformanceScreenList: 'Aikataulu',
 }
 
 const { headerTitle, magentaBackground } = commonStyles
@@ -36,49 +36,49 @@ Adding fontFamily: 'roboto' to headerTitleStyle fixes it.
 https://stackoverflow.com/questions/53420564/react-navigation-header-title-cut-off
 */
 
-type StackNavigatorOptions = { [key in PageNames]: {} }
+type StackNavigatorOptions = { [key in ScreenNames]: {} }
 
 const getDefaultNavigationOptions = (navigation: any, additionalOptions = {}) => ({
   headerStyle: {
     ...magentaBackground,
   },
   headerTitleStyle: headerTitle,
-  title: pageNameMap[navigation.state.routeName as PageNames] || '😒',
+  title: screenNameMap[navigation.state.routeName as ScreenNames] || '😒',
   ...additionalOptions,
 })
 
 const stackNavigatorOptions: StackNavigatorOptions = {
-  HomePage: {
-    screen: HomePage,
+  HomeScreen: {
+    screen: HomeScreen,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
   },
   Naamat20Years: {
-    screen: HomePage,
+    screen: HomeScreen,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
   },
-  MainInfoPageList: {
-    screen: MainInfoPageList,
+  MainInfoScreenList: {
+    screen: MainInfoScreenList,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
       navigation, getDefaultNavigationOptions(navigation),
     ),
   },
-  PerformerPageList: {
-    screen: PerformerPageList,
+  PerformerScreenList: {
+    screen: PerformerScreenList,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
       navigation, getDefaultNavigationOptions(navigation),
-    ),  ProfilePage: {
-      screen: ProfilePage,
+    ),  ProfileScreen: {
+      screen: ProfileScreen,
     },
   },
-  DynamicContentPage: {
-    screen: DynamicContentPage,
+  DynamicContentScreen: {
+    screen: DynamicContentScreen,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
       navigation,
       { title: navigation.getParam('title', '😒') },
     ),
   },
-  PerformancePageList: {
-    screen: PerformancePageList,
+  PerformanceScreenList: {
+    screen: PerformanceScreenList,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
       navigation, getDefaultNavigationOptions(navigation),
     ),
@@ -87,6 +87,6 @@ const stackNavigatorOptions: StackNavigatorOptions = {
 
 export default createAppContainer(createStackNavigator(stackNavigatorOptions,
   {
-    initialRouteName: 'HomePage',
+    initialRouteName: 'HomeScreen',
   },
 ))

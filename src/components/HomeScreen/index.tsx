@@ -5,32 +5,32 @@ import { NavigationEvents, NavigationScreenProps } from 'react-navigation'
 import { action } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
 import commonStyles from '../../styles/common'
-import { MainInfoPageRecord } from '../../utils/types/dynamic-content'
+import { MainInfoScreenRecord } from '../../utils/types/dynamic-content'
 import ListImageBackground from '../utils/ListImageBackground'
-import { MAIN_PAGE_NAMES, MainPageNames, pageNameMap } from '../utils/StackContainer'
-import landingPageStyles from './styles'
+import { MAIN_SCREEN_NAMES, MainScreenNames, screenNameMap } from '../utils/StackContainer'
+import landingScreenStyles from './styles'
 
 const { alert } = Alert
 const { rowStyle, columnStyle, textHeader } = commonStyles
-const { landingPageButtonStyle } = landingPageStyles
+const { landingScreenButtonStyle } = landingScreenStyles
 
-type HomePageProps = NavigationScreenProps
+type HomeScreenProps = NavigationScreenProps
 
-export default class HomePage extends Component<HomePageProps> {
-  public handlePagePress(page: MainInfoPageRecord) {
-    alert(page.title, page.content)
+export default class HomeScreen extends Component<HomeScreenProps> {
+  public handleScreenPress(screen: MainInfoScreenRecord) {
+    alert(screen.title, screen.content)
   }
 
-  public renderLandingPageButton(text: string, page: MainPageNames) {
+  public renderLandingScreenButton(text: string, screen: MainScreenNames) {
     return (
       <TouchableHighlight
         key={text}
         underlayColor="white"
         activeOpacity={0.95}
-        style={landingPageButtonStyle}
-        onPress={() => this.props.navigation.navigate(page)}
+        style={landingScreenButtonStyle}
+        onPress={() => this.props.navigation.navigate(screen)}
       >
-        <Text style={textHeader}>{pageNameMap[text as MainPageNames] || text}</Text>
+        <Text style={textHeader}>{screenNameMap[text as MainScreenNames] || text}</Text>
       </TouchableHighlight>
     )
   }
@@ -46,10 +46,10 @@ export default class HomePage extends Component<HomePageProps> {
             onWillFocus={() => action({ type: SYNC })}
           />
           <View style={columnStyle}>
-            {MAIN_PAGE_NAMES.slice(0, 2).map((p) => this.renderLandingPageButton(p, p))}
+            {MAIN_SCREEN_NAMES.slice(0, 2).map((s) => this.renderLandingScreenButton(s, s))}
           </View>
           <View style={columnStyle}>
-            {MAIN_PAGE_NAMES.slice(2).map((p) => this.renderLandingPageButton(p, p))}
+            {MAIN_SCREEN_NAMES.slice(2).map((s) => this.renderLandingScreenButton(s, s))}
           </View>
         </View>
       </View>

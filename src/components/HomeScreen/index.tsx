@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, Text, TouchableHighlight, View } from 'react-native'
+import { Alert, ImageBackground, Text, TouchableHighlight, View } from 'react-native'
 import { NavigationEvents, NavigationScreenProps } from 'react-navigation'
 
 import { action } from '../../store'
@@ -16,6 +16,13 @@ const { landingScreenButtonStyle } = landingScreenStyles
 
 type HomeScreenProps = NavigationScreenProps
 
+const backgroundImageMap: { [key in MainScreenNames]: any } = {
+  Naamat20Years: require(`./navigation-icons/icon-Naamat20Years.png`),
+  MainInfoScreenList: require(`./navigation-icons/icon-MainInfoScreenList.png`),
+  PerformanceScreenList: require(`./navigation-icons/icon-PerformanceScreenList.png`),
+  PerformerScreenList: require(`./navigation-icons/icon-PerformerScreenList.png`),
+}
+
 export default class HomeScreen extends Component<HomeScreenProps> {
   public handleScreenPress(screen: MainInfoScreenRecord) {
     alert(screen.title, screen.content)
@@ -23,15 +30,29 @@ export default class HomeScreen extends Component<HomeScreenProps> {
 
   public renderLandingScreenButton(text: string, screen: MainScreenNames) {
     return (
-      <TouchableHighlight
-        key={text}
-        underlayColor="white"
-        activeOpacity={0.95}
-        style={landingScreenButtonStyle}
-        onPress={() => this.props.navigation.navigate(screen)}
+      <ImageBackground
+        source={backgroundImageMap[screen]}
+        style={
+          landingScreenButtonStyle
+          // width: screenWidth,
+          // height: imageHeight * screenWidth / imageWidth,
+          // justifyContent: 'center',
+          // alignItems: 'center',
+        }
       >
-        <Text style={textHeader}>{screenNameMap[text as MainScreenNames] || text}</Text>
-      </TouchableHighlight>
+        <TouchableHighlight
+          key={text}
+          underlayColor="white"
+          activeOpacity={0.95}
+          style={{ ...landingScreenButtonStyle, backgroundColor: 'rgba(0, 0, 0, 0.0)' }}
+          onPress={() => this.props.navigation.navigate(screen)}
+        >
+          <Text style={textHeader}>
+            {screenNameMap[text as MainScreenNames] || text}
+            </Text>
+        </TouchableHighlight>
+      </ImageBackground>
+
     )
   }
 

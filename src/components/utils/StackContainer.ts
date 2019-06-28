@@ -63,6 +63,11 @@ const stackNavigatorOptions: StackNavigatorOptions = {
       navigation, getDefaultNavigationOptions(navigation),
     ),
   },
+  NaamatCam: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
+  },
+  /*
   PerformerScreenList: {
     screen: PerformerScreenList,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
@@ -71,6 +76,7 @@ const stackNavigatorOptions: StackNavigatorOptions = {
       screen: ProfileScreen,
     },
   },
+  */
   DynamicContentScreen: {
     screen: DynamicContentScreen,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Alert, Image, Text, TouchableHighlight, View } from 'react-native'
 import { NavigationEvents, NavigationScreenProps } from 'react-navigation'
+import { connect, MapStateToProps } from 'react-redux'
 
-import { action } from '../../store'
+import { action, ReduxStoreState } from '../../store'
 import { SYNC } from '../../store/dynamic-content/types'
 import commonStyles, { GREEN } from '../../styles/common'
 import { MainInfoScreenRecord } from '../../utils/types/dynamic-content'
@@ -18,7 +19,10 @@ const {
   landingScreenButtonSectionStyle,
 } = landingScreenStyles
 
-type HomeScreenProps = NavigationScreenProps
+interface StateProps {
+  naamat20years: MainInfoScreenRecord | undefined,
+}
+type HomeScreenProps = NavigationScreenProps & StateProps
 type AlternatePressFn = () => void
 
 const backgroundImageMap: { [key in MainScreenNames]: any } = {
@@ -28,7 +32,7 @@ const backgroundImageMap: { [key in MainScreenNames]: any } = {
   NaamatCam: require(`./navigation-icons/icon-NaamatCam.png`),
 }
 
-export default class HomeScreen extends Component<HomeScreenProps> {
+class HomeScreen extends Component<HomeScreenProps> {
   public handleScreenPress(screen: MainInfoScreenRecord) {
     alert(screen.title, screen.content)
   }
@@ -69,7 +73,18 @@ export default class HomeScreen extends Component<HomeScreenProps> {
             onWillFocus={() => action({ type: SYNC })}
           />
           <View style={columnStyle}>
-            {MAIN_SCREEN_NAMES.slice(0, 2).map((s) => this.renderLandingScreenButton(s))}
+            {MAIN_SCREEN_NAMES.slice(0, 2).map((s) => (
+              (s !== 'Naamat20Years')
+                ? this.renderLandingScreenButton(s)
+                : this.renderLandingScreenButton(s, () => {
+                  const item = this.props.naamat20years
+                  if (item) {
+                    this.props.navigation.navigate('DynamicContentScreen',
+                      { screen: item, title: item.title },
+                    )
+                  }
+                })
+            ))}
           </View>
           <View style={columnStyle}>
             {MAIN_SCREEN_NAMES.slice(2).map((s) => (
@@ -86,3 +101,9 @@ export default class HomeScreen extends Component<HomeScreenProps> {
     )
   }
 }
+
+const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxStoreState> = (state) => ({
+  naamat20years: state.dynamicContent.mainInfoScreens.find((s) => s.title === 'Rockfestari Naamat 20 vuotta'),
+})
+
+export default connect(mapStateToProps)(HomeScreen)

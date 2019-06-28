@@ -1,7 +1,5 @@
 import { AnyAction } from 'redux'
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-
 export const PERFORMANCE_LOCATIONS = ['Riihi', 'Navetta', 'Sideshow-teltta'] as const
 export type PerformanceLocationName = typeof PERFORMANCE_LOCATIONS[number]
 export type LocationPerformances = {

@@ -9,8 +9,8 @@ import ProfileScreen from '../ProfileScreen'
 import DynamicContentScreen from './DynamicContentScreen'
 
 export const MAIN_SCREEN_NAMES = [
-  'Naamat20Years', 'MainInfoScreenList',
-  'PerformerScreenList', 'PerformanceScreenList',
+  'Naamat20Years', 'PerformanceScreenList',
+  'MainInfoScreenList', 'NaamatCam',
 ] as const
 export const SCREEN_NAMES = [...MAIN_SCREEN_NAMES, 'HomeScreen', 'DynamicContentScreen'] as const
 
@@ -23,8 +23,9 @@ export type  ScreenNameMap = {
 export const screenNameMap: ScreenNameMap = {
   Naamat20Years: 'Naamat 20v',
   MainInfoScreenList: 'Info ja palvelut',
-  PerformerScreenList: 'Esiintyjät',
-  PerformanceScreenList: 'Aikataulu',
+  // PerformerScreenList: 'Esiintyjät',
+  PerformanceScreenList: 'Ohjelma',
+  NaamatCam: 'Naamakamera',
 }
 
 const { headerTitle, magentaBackground } = commonStyles

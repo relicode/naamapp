@@ -7,7 +7,7 @@ const { textHeaderHuge } = commonStyles
 const listImageBackground: TextStyle = {
   ...textHeaderHuge,
   color: WHITE,
-  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  backgroundColor: 'rgba(0, 0, 0, 0.7)',
   padding: 5,
 }
 

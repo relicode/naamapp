@@ -54,13 +54,13 @@ Follow the [Watchman](https://facebook.github.io/watchman/docs/install.html#buil
 
 ##### For debugging, install global react-native-debugger
 
-`npm install -g react-native-debugger`
+Install binary from `https://github.com/jhen0409/react-native-debugger/releases`
 
 ## Setup
 
 Copy the .env.base file as .env and set the following environment variables:
 
-`API_BASE_URL` Base url for API (for demo we use `https://api.punkapi.com/v2`)
+`API_BASE_URL` Base url for API
 
 ## Development
 
@@ -69,6 +69,7 @@ Copy the .env.base file as .env and set the following environment variables:
 2. (Android only) Run Metro Bundler `yarn start`
 
 3. Run React Native Debugger `react-native-debugger` (Optional but highly recommended)
+  3.5 You can also run the above commands at once using `EMULATOR=<emulator name> yarn server`
 
 4. Launch Application
    **Android:** `yarn run:android`

@@ -1,5 +1,5 @@
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 
@@ -16,10 +16,14 @@ const rootReducer = combineReducers({
 })
 const sagaMiddleware = createSagaMiddleware()
 
-const store = createStore(rootReducer, composeWithDevTools(
-  applyMiddleware(sagaMiddleware),
-  // other store enhancers if any
-))
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(
+    applyMiddleware(sagaMiddleware),
+    // other store enhancers if any
+  ),
+)
+
 
 function* rootSaga() {
   yield all([

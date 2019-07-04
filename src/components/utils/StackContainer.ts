@@ -1,79 +1,86 @@
-import { createAppContainer, createStackNavigator, NavigationScreenOptions } from 'react-navigation'
+import { createAppContainer, createStackNavigator } from 'react-navigation'
 
-import HomePage from '../HomePage'
-import MainInfoPage from '../MainInfoPage'
-import MainInfoPageList from '../MainInfoPageList'
-import PerformancePageList from '../PerformancePageList'
-import PerformerPageList from '../PerformerPageList'
-import ProfilePage from '../ProfilePage'
+import DynamicContentScreen from './DynamicContentScreen'
+import HomeScreen from '../HomeScreen'
+import MainInfoScreenList from '../MainInfoScreenList'
+import PerformanceScreenList from '../PerformanceScreenList'
+import commonStyles from '../../styles/common'
 
-export const MAIN_PAGE_NAMES = [
-  'HomePage', 'MainInfoPageList', 'ProfilePage',
-  'PerformerPageList', 'PerformancePageList', 'Kikkelis kokkelis page',
+export const MAIN_SCREEN_NAMES = [
+  'Naamat20Years', 'PerformanceScreenList',
+  'MainInfoScreenList', 'NaamatCam',
 ] as const
-export const PAGE_NAMES = [...MAIN_PAGE_NAMES, 'MainInfoPage'] as const
+export const SCREEN_NAMES = [...MAIN_SCREEN_NAMES, 'HomeScreen', 'DynamicContentScreen'] as const
 
-export type MainPageNames = typeof MAIN_PAGE_NAMES[number]
-export type PageNames = typeof PAGE_NAMES[number]
+export type MainScreenNames = typeof MAIN_SCREEN_NAMES[number]
+export type ScreenNames = typeof SCREEN_NAMES[number]
+export type  ScreenNameMap = {
+  [key in ScreenNames]?: string
+}
 
-/*
-type GetNavigationOptionsParams = (data: {
-    navigation: {
-      state: {
-        params: {
-          title: string,
-          content: string,
-          headerImage: {
-            url: string,
-            width: number,
-            height: number,
-          },
-        },
-      },
-    },
-  }) => NavigationScreenOptions
+export const screenNameMap: ScreenNameMap = {
+  Naamat20Years: 'Naamat 20v',
+  MainInfoScreenList: 'Info ja palvelut',
+  PerformanceScreenList: 'Ohjelma',
+  NaamatCam: 'Naamakamera',
+}
 
-const getNavigationOptions: GetNavigationOptionsParams = ({ navigation }) => ({
-  title: `Ze Profile'`,
-})
+const { headerTitle, magentaBackground } = commonStyles
 
-const getNavigationOptions = () => ({
-  // title: `Ze Profile'`,
-})
+/* HeaderTitle issue: (text slicing off)
+This happens to me as well on a OnePlus 5T, and I didn't change the font myself.
+Adding fontFamily: 'roboto' to headerTitleStyle fixes it.
+
+https://stackoverflow.com/questions/53420564/react-navigation-header-title-cut-off
 */
 
-type StackNavigatorOptions = { [key in PageNames]: {} }
+type StackNavigatorOptions = { [key in ScreenNames]: {} }
+
+const getDefaultNavigationOptions = (navigation: any, additionalOptions = {}) => ({
+  headerStyle: {
+    ...magentaBackground,
+  },
+  headerTitleStyle: headerTitle,
+  title: screenNameMap[navigation.state.routeName as ScreenNames] || '😒',
+  ...additionalOptions,
+})
 
 const stackNavigatorOptions: StackNavigatorOptions = {
-  'HomePage': {
-    screen: HomePage,
-    navigationOptions: () => ({
-      header: null,
-    }),
+  HomeScreen: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
   },
-  'MainInfoPageList': {
-    screen: MainInfoPageList,
-    navigationOptions: () => ({ title: 'Yleisinfo' }),
+  Naamat20Years: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
   },
-  'MainInfoPage': {
-    screen: MainInfoPage,
+  MainInfoScreenList: {
+    screen: MainInfoScreenList,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
+      navigation, getDefaultNavigationOptions(navigation),
+    ),
   },
-  'ProfilePage': {
-    screen: ProfilePage,
+  NaamatCam: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
   },
-  'PerformerPageList': {
-    screen: PerformerPageList,
+  DynamicContentScreen: {
+    screen: DynamicContentScreen,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
+      navigation,
+      { title: navigation.getParam('title', '😒') },
+    ),
   },
-  'PerformancePageList': {
-    screen: PerformancePageList,
-  },
-  'Kikkelis kokkelis page': {
-    screen: ProfilePage,
+  PerformanceScreenList: {
+    screen: PerformanceScreenList,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
+      navigation, getDefaultNavigationOptions(navigation),
+    ),
   },
 }
 
 export default createAppContainer(createStackNavigator(stackNavigatorOptions,
   {
-    initialRouteName: 'HomePage',
+    initialRouteName: 'HomeScreen',
   },
 ))

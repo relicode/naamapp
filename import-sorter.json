@@ -5,6 +5,20 @@
     "importStringConfiguration.tabSize": 2,
     "importStringConfiguration.quoteMark": "single",
     "importStringConfiguration.hasSemicolon": false,
-    "importSorter.importStringConfiguration.trailingComma": "multi-line"
+    "importSorter.importStringConfiguration.trailingComma": "multi-line",
+    "importSorter.sortConfiguration.customOrderingRules.rules": [{
+        "type": "importMember",
+        "regex": "^$",
+        "orderLevel": 10,
+        "disableSort": true
+    },
+    {
+        "regex": "^[@]",
+        "orderLevel": 30
+    },
+    {
+        "regex": "^[.]",
+        "orderLevel": 40
+    }]
 }
 

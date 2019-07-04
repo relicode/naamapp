@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -30,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeConfigPackage(),
             new NetInfoPackage(),
             new AsyncStoragePackage(),
-            new RNGestureHandlerPackage()
+            new RNGestureHandlerPackage(),
+            new ReactNativeOneSignalPackage()
       );
     }
 

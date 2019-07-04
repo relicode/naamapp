@@ -1,15 +1,14 @@
 /* tslint:disable:no-console */
 
 import React, { Component } from 'react'
+import { AppState, AppStateStatus } from 'react-native'
+import Config from 'react-native-config'
 import OneSignal from 'react-native-onesignal'
-import { Alert, AppState, AppStateStatus } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { Provider } from 'react-redux'
-import Config from 'react-native-config'
 
 import NetInfo from '@react-native-community/netinfo'
 
-import appConfig from '../app.json'
 import MainErrorBoundary from './components/utils/MainErrorBoundary'
 import StackContainer from './components/utils/StackContainer'
 import store, { action } from './store'

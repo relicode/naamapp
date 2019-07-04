@@ -3,7 +3,7 @@
   "description": "Official Naamat festival app",
   "author": "Anssi Herranen <anssi.herranen@iki.fi> (https://www.linkedin.com/in/anssiherranen/)",
   "license": "BSD-3-Clause",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "build:debug": "(cd android; ./gradlew assembleDebug)",
@@ -12,6 +12,7 @@
     "lint": "tslint src/**/*.ts{,x}",
     "lint:fix": "tslint --fix src/**/*.ts{,x}",
     "run:android": "REACT_DEBUGGER=react-native-debugger react-native run-android",
+    "run:android:release": "REACT_DEBUGGER=react-native-debugger react-native run-android --variant=release",
     "server": "concurrently \"emulator @$EMULATOR\" \"yarn start\" \"react-native-debugger\"",
     "shake": "adb shell input keyevent 82",
     "start": "react-native start",

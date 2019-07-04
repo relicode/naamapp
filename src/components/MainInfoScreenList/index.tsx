@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { Text, TouchableHighlight, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { NavigationScreenProps } from 'react-navigation'

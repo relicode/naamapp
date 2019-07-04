@@ -9,7 +9,7 @@ import { PerformanceRecord, PerformerRecord } from '../../utils/types/dynamic-co
 import ListImageBackground from '../utils/ListImageBackground'
 import styles from './styles'
 
-const { naamatView, naamatText, greenBackground, pinkBackground } = commonStyles
+const { naamatView, greenBackground, pinkBackground } = commonStyles
 
 const {
   performanceRow,

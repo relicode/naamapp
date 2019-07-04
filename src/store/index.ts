@@ -24,7 +24,6 @@ const store = createStore(
   ),
 )
 
-
 function* rootSaga() {
   yield all([
     watchAppStateChange(),

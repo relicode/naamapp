@@ -1,34 +1,56 @@
+/* tslint:disable:no-console */
+
 import React, { Component } from 'react'
+import OneSignal from 'react-native-onesignal'
 import { Alert, AppState, AppStateStatus } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { Provider } from 'react-redux'
+import Config from 'react-native-config'
 
 import NetInfo from '@react-native-community/netinfo'
 
 import appConfig from '../app.json'
 import MainErrorBoundary from './components/utils/MainErrorBoundary'
 import StackContainer from './components/utils/StackContainer'
-// import NotifService from './services/NotifService'
 import store, { action } from './store'
 import { APP_STATE_CHANGE, IS_ONLINE_CHANGE } from './store/app-state/types'
 
 type Props = {} & NavigationScreenProps
 
-interface State {
-  senderId: string,
-  // notif: NotifService,
-  registerToken?: string,
-  gcmRegistered?: boolean,
-}
+const { ONESIGNAL_APP_ID } = Config
 
-export default class App extends Component<Props, State> {
+export default class App extends Component<Props> {
 
-  public constructor(props: Props) {
+  constructor(props: Props) {
     super(props)
-    this.state = {
-      senderId: appConfig.senderID,
-      // notif: new NotifService(this.onRegister.bind(this), this.onNotif.bind(this)),
-    }
+    OneSignal.init(ONESIGNAL_APP_ID)
+    OneSignal.addEventListener('received', this.onReceived)
+    OneSignal.addEventListener('opened', this.onOpened)
+    OneSignal.addEventListener('ids', this.onIds)
+    OneSignal.configure() 	// triggers the ids event
+  }
+
+  public componentWillUnmount() {
+    OneSignal.removeEventListener('received', this.onReceived)
+    OneSignal.removeEventListener('opened', this.onOpened)
+    OneSignal.removeEventListener('ids', this.onIds)
+    AppState.removeEventListener('change', this.handleAppStateChange)
+    NetInfo.removeEventListener('connectionChange', this.handleNetworkStatusChange)
+  }
+
+  public onReceived(notification: string) {
+    console.log('Notification received: ', notification)
+  }
+
+  public onOpened(openResult: any) {
+    console.log('Message: ', openResult.notification.payload.body)
+    console.log('Data: ', openResult.notification.payload.additionalData)
+    console.log('isActive: ', openResult.notification.isAppInFocus)
+    console.log('openResult: ', openResult)
+  }
+
+  public onIds(device: string) {
+    console.log('Device info: ', device)
   }
 
   public handleAppStateChange = (appStateStatus: AppStateStatus) => {
@@ -44,23 +66,6 @@ export default class App extends Component<Props, State> {
     AppState.addEventListener('change', this.handleAppStateChange)
     NetInfo.addEventListener('connectionChange', this.handleNetworkStatusChange)
   }
-
-  public componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange)
-  }
-
-  public onRegister(token: { token: string }) {
-    Alert.alert('Registered !', JSON.stringify(token))
-    console.log(token)
-    this.setState({ registerToken: token.token, gcmRegistered: true })
-  }
-
-  /*
-  public onNotif(notif: { title: string, message: string }) {
-    console.log(notif)
-    Alert.alert(notif.title, notif.message)
-  }
-  */
 
   public render() {
     return (

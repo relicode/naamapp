@@ -3,7 +3,7 @@
   "description": "Official Naamat festival app",
   "author": "Anssi Herranen <anssi.herranen@iki.fi> (https://www.linkedin.com/in/anssiherranen/)",
   "license": "BSD-3-Clause",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "scripts": {
     "build:debug": "(cd android; ./gradlew assembleDebug)",

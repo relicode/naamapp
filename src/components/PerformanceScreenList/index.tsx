@@ -48,7 +48,7 @@ const formatTime = (date: string, dayOfWeek: boolean = false): string => {
 const generateDynamicContent = (performance: PerformanceRecord, allPerformers: PerformerRecord[], time: string) => {
   const title = performance.name
   const content = performance.description
-    ? [performance.description].concat(allPerformers.map((p) => p.description))
+    ? [].concat(allPerformers.map((p) => p.description))
     : allPerformers.map((p) => p.description)
 
   const performerWithHeaderImage = allPerformers.find((p) => p.headerImage !== undefined)

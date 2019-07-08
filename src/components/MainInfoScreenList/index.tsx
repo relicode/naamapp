@@ -32,22 +32,27 @@ class MainInfoScreenList extends Component<StateProps & NavigationScreenProps> {
         <FlatList
           data={this.props.mainInfoScreens.map((p) => ({ ...p, key: p.title }))}
           renderItem={({ item }: { item: MainInfoScreenRecord }) => (
-            <TouchableHighlight
-              key={item.title}
-              onPress={
-                () => this.props.navigation.navigate('DynamicContentScreen', { screen: item, title: item.title })
-              }
-            >
-              <View style={mainInfoScreenRow}>
-                <View style={mainInfoScreenRowStart}>
-                  <Text style={textHeader}>{item.title}</Text>
-                </View>
-                <View style={mainInfoScreenRowEnd}>
-                  <Text style={textHeader}>{'>'}</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-          )}
+            item.title !== 'Rockfestari Naamat 20 vuotta'
+              ? (
+                <TouchableHighlight
+                  key={item.title}
+                  onPress={
+                    () => this.props.navigation.navigate('DynamicContentScreen', { screen: item, title: item.title })
+                  }
+                >
+                  <View style={mainInfoScreenRow}>
+                    <View style={mainInfoScreenRowStart}>
+                      <Text style={textHeader}>{item.title}</Text>
+                    </View>
+                    <View style={mainInfoScreenRowEnd}>
+                      <Text style={textHeader}>{'>'}</Text>
+                    </View>
+                  </View>
+                </TouchableHighlight>
+              )
+              : null
+            )
+          }
         />
       </View>
     )

@@ -8,6 +8,7 @@ import { SYNC } from '../../store/dynamic-content/types'
 import commonStyles, { GREEN } from '../../styles/common'
 import { MainInfoScreenRecord } from '../../utils/types/dynamic-content'
 import ListImageBackground from '../utils/ListImageBackground'
+import NaamatModal from '../utils/NaamatModal'
 import { MAIN_SCREEN_NAMES, MainScreenNames, screenNameMap } from '../utils/StackContainer'
 import landingScreenStyles from './styles'
 
@@ -21,6 +22,7 @@ const {
 
 interface StateProps {
   naamat20years: MainInfoScreenRecord | undefined,
+  syncedAtLeastOnce: boolean,
 }
 type HomeScreenProps = NavigationScreenProps & StateProps
 type AlternatePressFn = () => void
@@ -65,6 +67,7 @@ class HomeScreen extends Component<HomeScreenProps> {
   public render() {
     return (
       <View style={columnStyle}>
+        <NaamatModal visible={!this.props.syncedAtLeastOnce} content="Haetaan sisältöä..." />
         <View style={landingScreenImageSectionStyle}>
           <ListImageBackground />
         </View>
@@ -104,6 +107,7 @@ class HomeScreen extends Component<HomeScreenProps> {
 
 const mapStateToProps: MapStateToProps<StateProps, NavigationScreenProps, ReduxStoreState> = (state) => ({
   naamat20years: state.dynamicContent.mainInfoScreens.find((s) => s.title === 'Rockfestari Naamat 20 vuotta'),
+  syncedAtLeastOnce: state.dynamicContent.synced ? true : false,
 })
 
 export default connect(mapStateToProps)(HomeScreen)

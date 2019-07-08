@@ -4,8 +4,6 @@ import { FlatList } from 'react-native-gesture-handler'
 import { NavigationScreenProps } from 'react-navigation'
 import { connect, MapStateToProps } from 'react-redux'
 
-import { isTemplateElement } from '@babel/types'
-
 import { ReduxStoreState } from '../../store'
 import commonStyles from '../../styles/common'
 import { MainInfoScreenRecord } from '../../utils/types/dynamic-content'

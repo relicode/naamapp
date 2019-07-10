@@ -1,3 +1,5 @@
+import { number } from 'prop-types'
+import { Image, ImageRequireSource, ImageURISource } from 'react-native'
 import { AnyAction } from 'redux'
 
 export const PERFORMANCE_LOCATIONS = ['Riihi', 'Navetta', 'Sideshow-teltta'] as const
@@ -13,9 +15,9 @@ export type DynamicContentFieldTypes = MainInfoScreenFields | PerformerFields | 
 export type DynamicContentRecord = MainInfoScreenRecord | PerformerRecord | PerformanceRecord
 
 export interface HeaderImage {
-  height: number,
-  url: string,
-  width: number,
+  height?: number,
+  url: ImageURISource,
+  width?: number,
 }
 
 export interface RecordFields {

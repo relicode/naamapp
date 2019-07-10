@@ -1,10 +1,10 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 
-import DynamicContentScreen from './DynamicContentScreen'
+import commonStyles from '../../styles/common'
 import HomeScreen from '../HomeScreen'
 import MainInfoScreenList from '../MainInfoScreenList'
 import PerformanceScreenList from '../PerformanceScreenList'
-import commonStyles from '../../styles/common'
+import DynamicContentScreen from './DynamicContentScreen'
 
 export const MAIN_SCREEN_NAMES = [
   'Naamat20Years', 'PerformanceScreenList',
@@ -13,6 +13,7 @@ export const MAIN_SCREEN_NAMES = [
 export const SCREEN_NAMES = [...MAIN_SCREEN_NAMES, 'HomeScreen', 'DynamicContentScreen'] as const
 
 export type MainScreenNames = typeof MAIN_SCREEN_NAMES[number]
+export type ScreenName = typeof SCREEN_NAMES
 export type ScreenNames = typeof SCREEN_NAMES[number]
 export type  ScreenNameMap = {
   [key in ScreenNames]?: string

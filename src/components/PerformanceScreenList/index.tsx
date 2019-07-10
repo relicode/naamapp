@@ -48,7 +48,7 @@ const formatTime = (date: string, dayOfWeek: boolean = false): string => {
 const generateDynamicContent = (performance: PerformanceRecord, allPerformers: PerformerRecord[], time: string) => {
   const title = performance.name
   const content = performance.description
-    ? [].concat(allPerformers.map((p) => p.description))
+    ? new Array().concat(allPerformers.map((p) => p.description))
     : allPerformers.map((p) => p.description)
 
   const performerWithHeaderImage = allPerformers.find((p) => p.headerImage !== undefined)
@@ -82,7 +82,10 @@ class PerformanceScreenList extends Component<Props, State> {
     return (
       <View style={naamatView}>
         <ScrollView>
-          <ListImageBackground />
+          <ListImageBackground
+            title="Aikataulut"
+            headerImage={require('../../assets/images/background-images/schedule.png')}
+          />
           <View style={{ display: 'flex', flexDirection: 'row', margin: 5 }}>
             {DAYS_OF_WEEKEND.map((p) => (
               <View key={p} style={{ flex: 1, marginLeft: 5, marginRight: 5 }}>

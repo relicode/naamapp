@@ -27,7 +27,8 @@ class MainInfoScreenList extends Component<StateProps & NavigationScreenProps> {
     return (
       <View style={naamatView}>
         <ListImageBackground
-          title={'Info ja palvelut'}
+          title="Info ja palvelut"
+          headerImage={require('../../assets/images/background-images/info-bg.png')}
         />
         <FlatList
           data={this.props.mainInfoScreens.map((p) => ({ ...p, key: p.title }))}

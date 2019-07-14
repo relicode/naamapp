@@ -42,7 +42,7 @@ const getDefaultNavigationOptions = (navigation: any, additionalOptions = {}) =>
     ...magentaBackground,
   },
   headerTitleStyle: headerTitle,
-  title: screenNameMap[navigation.state.routeName as ScreenNames] || '😒',
+  title: screenNameMap[navigation.state.routeName as ScreenNames] || '',
   ...additionalOptions,
 })
 

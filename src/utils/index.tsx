@@ -1,3 +1,4 @@
+import moment, { Moment } from 'moment-timezone'
 import React from 'react'
 import { Dimensions, Image, ImageProps, Platform } from 'react-native'
 
@@ -9,6 +10,37 @@ export const windowHeight = Dimensions.get('window').height
 export const getPlatform = (): 'IOS' | 'ANDROID' => (
   Platform.OS === 'ios' ? 'IOS' : 'ANDROID'
 )
+
+export interface HelsinkiMoment {
+  momentHelsinki: Moment,
+  str: string,
+  dayOfWeek: number,
+  fixedDayOfWeek: number,
+  hours: number,
+  time: string,
+}
+
+export const toHelsinkiMoment = (utcString?: string): HelsinkiMoment => {
+  const DEFAULT_TIME_ZONE = 'Europe/Helsinki'
+  const momentHelsinki = typeof utcString === 'string'
+    ? moment.tz(utcString, 'utc').tz(DEFAULT_TIME_ZONE)
+    : moment.tz('utc').tz(DEFAULT_TIME_ZONE)
+
+  const str = momentHelsinki.format('YYYY-MM-DDTHH:mm-ss.SSSZ')
+  const dayOfWeek = momentHelsinki.day()
+  const fixedDayOfWeek = momentHelsinki.clone().subtract(3, 'hours').day()
+  const hours = momentHelsinki.hours()
+  const time = momentHelsinki.format('HH:mm')
+
+  return {
+    momentHelsinki,
+    str,
+    dayOfWeek,
+    fixedDayOfWeek,
+    hours,
+    time,
+  }
+}
 
 export const getFittedImageProps = (props: any) => {
   const { source, style } = props

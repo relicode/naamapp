@@ -18,19 +18,16 @@ function* syncDynamicContent() {
   }
 
   const remoteContentUpdateTime = yield call(fetchLastSynced)
+  const remoteSyncNeeded = !localContent.synced || (new Date(localContent.synced) < new Date(remoteContentUpdateTime))
 
-  const remoteSyncNeeded = __DEV__ || !localContent.synced
-    || (new Date(localContent.synced) < new Date(remoteContentUpdateTime))
-
-  const dynamicContent: DynamicContentResponse = yield remoteSyncNeeded
-    ? call(fetchDynamicContent)
-    : localContent
-
-  yield put({
-    type: SET_DYNAMIC_CONTENT,
-    ...dynamicContent,
-  } as DynamicContentAction)
-  yield saveDynamicContent(dynamicContent)
+  if (remoteSyncNeeded) {
+    const dynamicContent: DynamicContentResponse = yield call(fetchDynamicContent)
+    yield put({
+      type: SET_DYNAMIC_CONTENT,
+      ...dynamicContent,
+    } as DynamicContentAction)
+    yield saveDynamicContent(dynamicContent)
+  }
 }
 
 export function* watchSync() {

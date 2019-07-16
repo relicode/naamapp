@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { Alert, Button, ScrollView, Text, TouchableHighlight, View } from 'react-native'
+import { Alert, ScrollView, Text, TouchableHighlight, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { connect, MapStateToProps } from 'react-redux'
 
 import { ReduxStoreState } from '../../store'
 import commonStyles, { GREEN, PINK } from '../../styles/common'
+import { toHelsinkiMoment } from '../../utils'
 import { PerformanceRecord, PerformerRecord } from '../../utils/types/dynamic-content'
 import ListImageBackground from '../utils/ListImageBackground'
+import Button from '../utils/NaamatButton'
 import styles from './styles'
 
 const { naamatView, greenBackground, pinkBackground } = commonStyles
@@ -38,10 +40,9 @@ const dayOfWeekMap: { [key: string]: typeof DAYS_OF_WEEKEND[number] } = [0, 5, 6
   .reduce((acc, cur) => ({ ...acc, [cur]: DAYS_OF_WEEK[cur] }), {})
 
 const formatTime = (date: string, dayOfWeek: boolean = false): string => {
-  const newDate = new Date(date)
+  const hkiMoment = toHelsinkiMoment(date)
   return (
-    (dayOfWeek ? `${dayOfWeekMap[newDate.getDay()]} ` : '') +
-    [newDate.getHours(), newDate.getMinutes()].map((d) => String(d).padStart(2, '0')).join(':')
+    (dayOfWeek ? `${dayOfWeekMap[hkiMoment.dayOfWeek]} ` : '') + hkiMoment.time
   )
 }
 
@@ -70,7 +71,7 @@ class PerformanceScreenList extends Component<Props, State> {
   public constructor(props: Props) {
     super(props)
 
-    const dayOfWeek: number = new Date().getDay()
+    const dayOfWeek: number = toHelsinkiMoment().fixedDayOfWeek
 
     this.state = {
       dayFilter: dayOfWeekMap[dayOfWeek],
@@ -93,7 +94,7 @@ class PerformanceScreenList extends Component<Props, State> {
                   onPress={() => this.setState((prevState) => (
                     prevState.dayFilter === p ? { dayFilter: false } : { dayFilter: p }
                   ))}
-                  title={p}
+                  label={p}
                   color={this.state.dayFilter === p ? GREEN : PINK}
                 />
               </View>
@@ -101,7 +102,9 @@ class PerformanceScreenList extends Component<Props, State> {
           </View>
           {performances
             .filter((p) => (
-              this.state.dayFilter ? dayOfWeekMap[new Date(p.startTime).getDay()] === this.state.dayFilter : true
+              this.state.dayFilter
+                ? dayOfWeekMap[toHelsinkiMoment(p.startTime).fixedDayOfWeek] === this.state.dayFilter
+                : true
             ))
             .map((p, idx) => {
               const time = `${formatTime(p.startTime, true)} - ${formatTime(p.endTime)}`
@@ -131,8 +134,8 @@ class PerformanceScreenList extends Component<Props, State> {
                     <View style={performanceRowEnd}>
                       <Text onPress={(ev) => {
                         ev.preventDefault()
-                        Alert.alert('\u2661\u2661\u2661\u2661\u2661', 'Mekin tykätään tästä <3')
-                      }} style={performanceRowEndContent}>{'\u2661'}</Text>
+                        // Alert.alert('\u2661\u2661\u2661\u2661\u2661', 'Mekin tykätään tästä <3')
+                      }} style={performanceRowEndContent}>{'' && '\u2661'}</Text>
                     </View>
                   </View>
                 </TouchableHighlight>

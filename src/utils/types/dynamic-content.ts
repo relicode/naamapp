@@ -1,5 +1,4 @@
-import { number } from 'prop-types'
-import { Image, ImageRequireSource, ImageURISource } from 'react-native'
+import { ImageURISource } from 'react-native'
 import { AnyAction } from 'redux'
 
 export const PERFORMANCE_LOCATIONS = ['Riihi', 'Navetta', 'Sideshow-teltta'] as const

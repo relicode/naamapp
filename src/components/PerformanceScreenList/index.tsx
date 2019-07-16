@@ -134,8 +134,8 @@ class PerformanceScreenList extends Component<Props, State> {
                     <View style={performanceRowEnd}>
                       <Text onPress={(ev) => {
                         ev.preventDefault()
-                        Alert.alert('\u2661\u2661\u2661\u2661\u2661', 'Mekin tykätään tästä <3')
-                      }} style={performanceRowEndContent}>{'\u2661'}</Text>
+                        // Alert.alert('\u2661\u2661\u2661\u2661\u2661', 'Mekin tykätään tästä <3')
+                      }} style={performanceRowEndContent}>{'' && '\u2661'}</Text>
                     </View>
                   </View>
                 </TouchableHighlight>

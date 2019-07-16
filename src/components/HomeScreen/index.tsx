@@ -94,7 +94,7 @@ class HomeScreen extends Component<HomeScreenProps> {
               s !== 'NaamatCam'
                 ? this.renderLandingScreenButton(s)
                 : this.renderLandingScreenButton(s, () => (
-                  alert('Naamakamera', 'Ota kiva naamakuva kaverista tai lipusta tai jotain. Ei ehditty toteuttaa.')
+                  alert('Naamakamera', 'Eipäs ehditty vielä tehdä. Tekee paluun seuraavassa versiossa. Tai vuonna.')
                 ))
             ))}
           </View>

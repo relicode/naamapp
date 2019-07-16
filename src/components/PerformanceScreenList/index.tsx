@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, Button, ScrollView, Text, TouchableHighlight, View } from 'react-native'
+import { Alert, ScrollView, Text, TouchableHighlight, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { connect, MapStateToProps } from 'react-redux'
 
@@ -8,6 +8,7 @@ import commonStyles, { GREEN, PINK } from '../../styles/common'
 import { toHelsinkiMoment } from '../../utils'
 import { PerformanceRecord, PerformerRecord } from '../../utils/types/dynamic-content'
 import ListImageBackground from '../utils/ListImageBackground'
+import Button from '../utils/NaamatButton'
 import styles from './styles'
 
 const { naamatView, greenBackground, pinkBackground } = commonStyles
@@ -93,7 +94,7 @@ class PerformanceScreenList extends Component<Props, State> {
                   onPress={() => this.setState((prevState) => (
                     prevState.dayFilter === p ? { dayFilter: false } : { dayFilter: p }
                   ))}
-                  title={p}
+                  label={p}
                   color={this.state.dayFilter === p ? GREEN : PINK}
                 />
               </View>

@@ -9,11 +9,22 @@ import { watchAppStateChange } from './app-state/sagas'
 import { AppState } from './app-state/types'
 import dynamicContent from './dynamic-content/reducers'
 import { watchSync } from './dynamic-content/sagas'
+import pushNotifications from './push-notifications/reducers'
+import { watchNotifications } from './push-notifications/sagas'
+import { PushNotificationsState } from './push-notifications/types'
+
+export interface ReduxStoreState {
+  appState: AppState,
+  dynamicContent: DynamicContent,
+  pushNotifications: PushNotificationsState,
+}
 
 const rootReducer = combineReducers({
   appState,
   dynamicContent,
+  pushNotifications,
 })
+
 const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
@@ -28,15 +39,11 @@ function* rootSaga() {
   yield all([
     watchAppStateChange(),
     watchSync(),
+    watchNotifications(),
   ])
 }
 
 sagaMiddleware.run(rootSaga)
-
-export interface ReduxStoreState {
-  appState: AppState,
-  dynamicContent: DynamicContent,
-}
 
 export const action = (a: AnyAction) => store.dispatch({ ...a })
 

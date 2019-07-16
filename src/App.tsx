@@ -1,7 +1,7 @@
 /* tslint:disable:no-console */
 
 import React, { Component } from 'react'
-import { AppState, AppStateStatus } from 'react-native'
+import { Alert, AppState, AppStateStatus } from 'react-native'
 import Config from 'react-native-config'
 import OneSignal from 'react-native-onesignal'
 import { NavigationScreenProps } from 'react-navigation'
@@ -19,10 +19,16 @@ import {
   IS_ONLINE_CHANGE,
 } from './store/app-state/types'
 import { SYNC } from './store/dynamic-content/types'
+import {
+  generateNotification,
+  NOTIFICATION_ACTION,
+  NotificationAction,
+} from './store/push-notifications/types'
 
 type Props = {} & NavigationScreenProps
 
 const { ONESIGNAL_APP_ID } = Config
+const { alert } = Alert
 
 export default class App extends Component<Props> {
 
@@ -30,7 +36,7 @@ export default class App extends Component<Props> {
     super(props)
     OneSignal.init(ONESIGNAL_APP_ID)
 
-    // OneSignal.inFocusDisplaying(0) // Hide alert
+    OneSignal.inFocusDisplaying(0) // Hide alert
     OneSignal.addEventListener('received', this.onReceived)
     OneSignal.addEventListener('opened', this.onOpened)
     OneSignal.addEventListener('ids', this.onIds)
@@ -47,21 +53,28 @@ export default class App extends Component<Props> {
     NetInfo.removeEventListener('connectionChange', this.handleNetworkStatusChange)
   }
 
-  public onReceived(notification: string) {
-    console.log('Notification received: ', notification)
+  public onReceived(openResult: any) {
+    // console.log('Open result received: ', openResult)
+    const { body, title } = openResult.payload
+    const n = generateNotification(body, title)
+    alert(n.title, n.body)
   }
 
   public onOpened(openResult: { notification: { payload: { body: string, title: string }, isAppInFocus: boolean } }) {
-    // const { body, title } = openResult.notification.payload
+    // console.log('Notification opened: ', openResult)
+    const { body, title } = openResult.notification.payload
     // const { isAppInFocus } = openResult.notification
     // console.log('Message: ', openResult.notification.payload.body)
     // console.log('Data: ', openResult.notification.payload.additionalData)
     // console.log('isActive: ', openResult.notification.isAppInFocus)
-    console.log('openResult: ', openResult)
-    // if (!isAppInFocus) {
-    //   console.log('app not in focus')
-    // }
-    // alert(title, body)
+    const n = generateNotification(body, title)
+    const notificationAction: NotificationAction = {
+      type: NOTIFICATION_ACTION,
+      addOrDelete: 'ADD',
+      notification: n,
+    }
+    action(notificationAction)
+    alert(n.title, n.body)
   }
 
   public onIds(deviceInfo: DeviceInfo) {

@@ -1,9 +1,15 @@
 import { AppStateStatus } from 'react-native'
 import { AnyAction } from 'redux'
 
+export interface DeviceInfo {
+  pushToken: string,
+  userId: string,
+}
+
 export interface AppState {
   status: AppStateStatus,
   isOnline: boolean,
+  deviceInfo?: DeviceInfo,
 }
 
 export interface SetAppStateStatusAction extends AnyAction {
@@ -14,9 +20,14 @@ export interface SetIsOnlineAction extends AnyAction {
   isOnline: boolean,
 }
 
-export type AppStateActions = SetAppStateStatusAction | SetIsOnlineAction
+export interface SetDeviceInfoAction extends AnyAction {
+  deviceInfo: DeviceInfo
+}
 
-const storePrefix: string = 'appState'
-export const APP_STATE_CHANGE: string = `${storePrefix}/APP_STATE_CHANGE`
-export const IS_ONLINE_CHANGE: string = `${storePrefix}/IS_ONLINE_CHANGE`
-export const SET_APP_STATE_STATUS: string = `${storePrefix}/SET_STATUS`
+export type AppStateActions = SetAppStateStatusAction | SetIsOnlineAction | SetDeviceInfoAction
+
+const storePrefix = 'appState'
+export const APP_STATE_CHANGE = `${storePrefix}/APP_STATE_CHANGE`
+export const IS_ONLINE_CHANGE = `${storePrefix}/IS_ONLINE_CHANGE`
+export const DEVICE_INFO_CHANGE = `${storePrefix}/DEVICE_INFO_CHANGE`
+export const SET_APP_STATE_STATUS = `${storePrefix}/SET_STATUS`

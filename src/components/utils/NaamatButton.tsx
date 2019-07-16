@@ -1,7 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native'
+import { StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
 
 import commonStyles from '../../styles/common'
+import { getPlatform } from '../../utils/index'
+
+const isIOS = getPlatform() === 'IOS'
 
 const { naamatView, textHeader } = commonStyles
 const styles = StyleSheet.create({
@@ -24,15 +27,21 @@ interface Props {
 
 const ButtonWrapper = ({ onPress, label, color }: Props) => {
     // Normal Android buttons get a gray ripple
-    return (
-      <TouchableNativeFeedback
-        onPress={onPress}
-      >
-        <View style={{ ...styles.view, backgroundColor: color }}>
-          <Text style={{ ...styles.text }}>{label}</Text>
-        </View>
-      </TouchableNativeFeedback>
-    )
+    return isIOS ? (
+        <TouchableOpacity onPress={onPress}>
+            <View style={{ ...styles.view, backgroundColor: color }}>
+              <Text style={{ ...styles.text }}>{label}</Text>
+            </View>
+        </TouchableOpacity>
+        ) : (
+        <TouchableNativeFeedback
+          onPress={onPress}
+        >
+          <View style={{ ...styles.view, backgroundColor: color }}>
+            <Text style={{ ...styles.text }}>{label}</Text>
+          </View>
+        </TouchableNativeFeedback>
+      )
   }
 
 export default ButtonWrapper

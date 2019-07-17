@@ -3,12 +3,13 @@ import { createAppContainer, createStackNavigator } from 'react-navigation'
 import commonStyles from '../../styles/common'
 import HomeScreen from '../HomeScreen'
 import MainInfoScreenList from '../MainInfoScreenList'
+import NaamatCamScreen from '../NaamatCamScreen'
 import PerformanceScreenList from '../PerformanceScreenList'
 import DynamicContentScreen from './DynamicContentScreen'
 
 export const MAIN_SCREEN_NAMES = [
   'Naamat20Years', 'PerformanceScreenList',
-  'MainInfoScreenList', 'NaamatCam',
+  'MainInfoScreenList', 'NaamatCamScreen',
 ] as const
 export const SCREEN_NAMES = [...MAIN_SCREEN_NAMES, 'HomeScreen', 'DynamicContentScreen'] as const
 
@@ -23,7 +24,7 @@ export const screenNameMap: ScreenNameMap = {
   Naamat20Years: 'Naamat 20v',
   MainInfoScreenList: 'Info ja palvelut',
   PerformanceScreenList: 'Ohjelma',
-  NaamatCam: 'Naamakamera',
+  NaamatCamScreen: 'Ajankohtaista',
 }
 
 const { headerTitle, magentaBackground } = commonStyles
@@ -61,15 +62,15 @@ const stackNavigatorOptions: StackNavigatorOptions = {
       navigation, getDefaultNavigationOptions(navigation),
     ),
   },
-  NaamatCam: {
-    screen: HomeScreen,
-    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation, { header: null }),
+  NaamatCamScreen: {
+    screen: NaamatCamScreen,
+    navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(navigation),
   },
   DynamicContentScreen: {
     screen: DynamicContentScreen,
     navigationOptions: ({ navigation }: any) => getDefaultNavigationOptions(
       navigation,
-      { title: navigation.getParam('title', '😒') },
+      { title: navigation.getParam('title', '') },
     ),
   },
   PerformanceScreenList: {

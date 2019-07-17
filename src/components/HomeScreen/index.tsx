@@ -31,7 +31,7 @@ const backgroundImageMap: { [key in MainScreenNames]: any } = {
   Naamat20Years: require(`./navigation-icons/icon-Naamat20Years.png`),
   MainInfoScreenList: require(`./navigation-icons/icon-MainInfoScreenList.png`),
   PerformanceScreenList: require(`./navigation-icons/icon-PerformanceScreenList.png`),
-  NaamatCam: require(`./navigation-icons/icon-NaamatCam.png`),
+  NaamatCamScreen: require(`./navigation-icons/icon-NaamatCam.png`),
 }
 
 class HomeScreen extends Component<HomeScreenProps> {
@@ -49,13 +49,13 @@ class HomeScreen extends Component<HomeScreenProps> {
         onPress={alternatePressFn ? alternatePressFn : () => this.props.navigation.navigate(screen)}
       >
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-          <Image
+          {screen !== 'NaamatCamScreen' ? (<Image
             source={backgroundImageMap[screen]}
             style={{
               width: 75,
               height: 75,
             }}
-          />
+          />) : <Text style={{ ...textHeader, fontSize: 64 }}>!</Text>}
           <Text style={textHeader}>
             {screenNameMap[screen as MainScreenNames] || screen}
           </Text>
@@ -90,13 +90,7 @@ class HomeScreen extends Component<HomeScreenProps> {
             ))}
           </View>
           <View style={columnStyle}>
-            {MAIN_SCREEN_NAMES.slice(2).map((s) => (
-              s !== 'NaamatCam'
-                ? this.renderLandingScreenButton(s)
-                : this.renderLandingScreenButton(s, () => (
-                  alert('Naamakamera', 'Eipäs ehditty vielä tehdä. Tekee paluun seuraavassa versiossa. Tai vuonna.')
-                ))
-            ))}
+            {MAIN_SCREEN_NAMES.slice(2).map((s) => this.renderLandingScreenButton(s))}
           </View>
         </View>
       </View>

@@ -14,6 +14,7 @@ export const getPlatform = (): 'IOS' | 'ANDROID' => (
 export interface HelsinkiMoment {
   momentHelsinki: Moment,
   str: string,
+  strShort: string,
   dayOfWeek: number,
   fixedDayOfWeek: number,
   hours: number,
@@ -27,6 +28,7 @@ export const toHelsinkiMoment = (utcString?: string): HelsinkiMoment => {
     : moment.tz('utc').tz(DEFAULT_TIME_ZONE)
 
   const str = momentHelsinki.format('YYYY-MM-DDTHH:mm-ss.SSSZ')
+  const strShort = momentHelsinki.format('DD-MM-YYYY - HH:mm')
   const dayOfWeek = momentHelsinki.day()
   const fixedDayOfWeek = momentHelsinki.clone().subtract(3, 'hours').day()
   const hours = momentHelsinki.hours()
@@ -35,6 +37,7 @@ export const toHelsinkiMoment = (utcString?: string): HelsinkiMoment => {
   return {
     momentHelsinki,
     str,
+    strShort,
     dayOfWeek,
     fixedDayOfWeek,
     hours,
